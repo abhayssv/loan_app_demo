@@ -1,0 +1,106 @@
+<header class="section-header">
+    <div class="tbl">
+      <div class="tbl-row">
+        <div class="column1">
+            <div class="tbl-cell">
+                <h3>Edit Profile</h3>
+                <ol class="breadcrumb breadcrumb-simple">
+                    <li><a [routerLink]="['/']">Home</a></li>
+                    <li><a [routerLink]="['/profile']">Profile</a></li>
+                    <li class="active">Edit Profile</li>
+                </ol>
+            </div>
+        </div>
+        <div class="column2">
+          <div *ngIf="user.profileimage" class="tbl-cell"> 
+            <img [src]="user.profileimage" alt="Avatar" class="prof_imgs">
+            <h6>Profile Image</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Main content -->
+  
+  <section class="box-typical box-typical-padding">
+    <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" enctype="multipart/form-data" novalidate>
+      <input type="hidden" name="id" [(ngModel)]="user.id" #id="ngModel">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstname.valid}">
+                <label for="firstname" class="required semibold form-label">FirstName</label>
+                <input type="text" class="form-control" name="firstname" [(ngModel)]="user.firstname" #firstname="ngModel"
+                  required>
+                <div *ngIf="f.submitted && !firstname.valid" class="help-block">FirstName is required</div>
+              </div>
+            </div> 
+            <div class="col-sm-6">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastname.valid}">
+                <label for="lastname" class="required semibold form-label">LastName</label>
+                <input type="text" class="form-control" name="lastname" [(ngModel)]="user.lastname" #lastname="ngModel"
+                  required>
+                <div *ngIf="f.submitted && !lastname.valid" class="help-block">LastName is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+                <fieldset class="form-group">
+                    <label class="semibold form-label" for="email">Email </label>
+                    <span class="form-control maxlength-simple">{{ user.email || "&nbsp;" }}</span>
+                </fieldset>
+            </div> 
+            <div class="col-sm-6">
+              <div class="form-group" >
+                <label for="profile_image" class="required semibold form-label">Profile Image</label>
+                <input type="file" class="form-control" name="profile_image" #profile_image (change)="selectImage($event)"> 
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+                <fieldset class="form-group">
+                  <label class="semibold form-label" for="mobile_no">Mobile Number </label>
+                  <span class="form-control maxlength-simple">{{ user.mobile_no || "&nbsp;" }}</span>
+                </fieldset>
+            </div> 
+          </div>
+            <div class="checkbox-toggle row">
+                <div class="col-md-6 ">
+                    <label class="form-label uppercase change-password-link">
+                    <input type="checkbox" checked="" name="changePassword" [(ngModel)]="user.changePassword"
+                    #changePassword="ngModel" value="false"> Change Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group" *ngIf="user.changePassword">
+                        <label class="required form-label semibold">New Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="user.password" #password="ngModel" required reverse="true" />
+                        <div style="color: #fa424a;" *ngIf="f.submitted && !password.valid" class="help-block">Password is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group" *ngIf="user.changePassword">
+                        <label class="required form-label semibold">Repeat Password</label>
+                        <input type="password" class="form-control" name="repeatPassword" placeholder="Repeat password" [(ngModel)]="user.repeatPassword" #repeatPassword="ngModel" required validateEqual="password"/>
+                        <div style="color: #fa424a;" *ngIf="f.submitted && !repeatPassword.valid" class="help-block">Password mismatch
+                        </div> 
+                    </div>
+                </div>
+            </div>
+          <div class="col-md-12 align-middle">
+            <div class="form-group">
+              <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+              <a class="btn btn-primary" [routerLink]="['/users']">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>

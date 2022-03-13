@@ -1,0 +1,28 @@
+.bg-header {
+	background: #f6f8fa;
+}
+
+.trans-check-box{
+  width: 40px;
+}
+
+.trans-checkbox {
+   width: 20px;
+  height: 20px;
+}
+
+.scroller::-webkit-scrollbar {
+	 width: 5px !important;
+	 height: 5px !important;
+	}
+
+.scroller::-webkit-scrollbar-thumb {
+	  background: #afcb1f !important;
+}	
+
+.payments-box {
+	max-height: 25vh;
+	overflow-y: auto;
+}
+
+

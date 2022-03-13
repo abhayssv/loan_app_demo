@@ -1,0 +1,275 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Overall Business Collection</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Overall Business Collection</li>
+        </ol> 
+      </div>
+      <div class="tbl-cell ref-btn">
+        <button class="btn btn-primary active mr-1" (click)="reminderPopup(rempopup)"><i class="glyphicon glyphicon-plus pr-1"></i>Add Reminder</button> 
+        <button class="btn btn-primary" (click)="refresh()"><i class="fa fa-repeat"></i> Refresh</button> 
+      </div>
+    </div>
+  </div>
+</header>
+<section class="box-typical box-typical-padding">
+  <h5>Search & Filter</h5>
+  <form name="form" (ngSubmit)="search(f.value)" #f="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="from_date">From Date</label>
+        <input type="date" class="form-control"  name="from_date" [(ngModel)]="searchoverallcollection.from_date" #from_date="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="to_date">To Date</label>
+        <input type="date" class="form-control" name="to_date" [(ngModel)]="searchoverallcollection.to_date" #to_date="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="loan_id">Loan Id</label>
+        <input type="number" class="form-control" name="loan_id" [(ngModel)]="searchoverallcollection.loan_id" #loan_id="ngModel">
+      </div>  
+      <div class="col-md-3">
+        <label for="name">Customer Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="searchoverallcollection.name" #name="ngModel">
+      </div>  
+    </div><br>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="mobile_no">Mobile Number</label>
+        <input type="number" class="form-control" name="mobile_no" [(ngModel)]="searchoverallcollection.mobile_no" #mobile_no="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" name="email" [(ngModel)]="searchoverallcollection.email" #email="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="id_number">Adhaar Number</label>
+        <input type="text" class="form-control" name="id_number" [(ngModel)]="searchoverallcollection.id_number" #id_number="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="user_type">User Type</label>
+        <select  class="form-control" name="user_type" [(ngModel)]="searchoverallcollection.user_type" #user_type="ngModel" required>
+          <option [ngValue]="null" disabled>select-user-type</option>
+          <option *ngFor="let userType of user_types" [ngValue]="userType.id">{{userType.name}}</option>
+        </select>
+      </div> 
+    </div><br>
+    <div class="row"> 
+      <div class="col-md-3">
+        <label for="overdue_days">Overdue Days</label>
+        <input type="number" class="form-control" name="overdue_days" [(ngModel)]="searchoverallcollection.overdue_days" #overdue_days="ngModel">
+      </div>    
+      <div class="col-md-3">
+        <label for="tenure">Tenure</label>
+        <input type="text" class="form-control" name="tenure" [(ngModel)]="searchoverallcollection.tenure" #tenure="ngModel">
+      </div>  
+      <div class="col-md-3">
+        <label for="amount">amount</label>
+        <select class="form-control" name="amount" [(ngModel)]="searchoverallcollection.amount" #amount="ngModel" required>
+          <option [ngValue]="null" disabled>select-tenure</option>
+          <option *ngFor="let amount of amounts" [ngValue]="amount.amount">{{amount.amount}}</option>
+        </select>
+      </div> 
+      <div class="col-md-3" *ngIf="dataArray.includes('assigned-users')">
+        <label for="collection_team">Collection Team</label>
+        <select class="form-control" name="collection_team" [(ngModel)]="searchoverallcollection.collection_team" #collection_team="ngModel" required>
+          <option [ngValue]="null" disabled>Select Collection Team</option>
+          <option *ngFor="let collector of collectionTeams" [ngValue]="collector.id">{{collector.name}} ({{collector.count}})</option>
+        </select>
+      </div>  
+    </div><br>
+    <div class="row">
+      <div class="col-md-3" *ngIf="dataArray.includes('assigned-users')">
+        <label for="assigned">Assigned</label>
+        <select class="form-control" name="assigned" [(ngModel)]="searchoverallcollection.assigned" #assigned="ngModel" required>
+          <option [ngValue]="null" disabled>select-user-type</option>
+          <option *ngFor="let assinger of assignerLists" [ngValue]="assinger.id">{{assinger.name}} ({{assinger.count}})</option>
+        </select>
+      </div>  
+    </div><br>
+    <div class="row m-t-1">
+      <div class="col-md-2 search-button">
+        <button class="btn btn-primary" (click) = toggleDisplay()><i class="fa fa-search"></i> Search</button>
+      </div> 
+      <div class="col-md-2 search-button">
+        <span (click)="reset()" class="btn btn-warning" title="Reset Filter">Reset Filter</span> 
+      </div>
+    </div>
+  </form>
+</section>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <div class="table-responsive">
+    <!-- <div class="col-md-12"> -->
+      <table class="display nowrap table table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr> 
+            <th>Loan Id</th>
+            <th>Name</th>
+            <th>Mobile No</th>
+            <th>Email</th> 
+            <th>Apply Date</th>  
+            <th>Disbursed Date</th>  
+            <th>Loan Amount</th> 
+            <th>Repayment Amount</th>
+            <th>Overdue Days</th>
+            <th>Collector Log</th>
+            <th>Log Update Time</th> 
+            <th>Loger</th>
+            <th>Collection Team</th>
+            <th>Assigned</th>   
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container  *ngFor="let overallcollection of overallCollections | paginate: { itemsPerPage: limit, currentPage: p, totalItems: total }">
+            <tr> 
+              <td> 
+                <a [routerLink]="['/overall_business_collection_customer/view/' + overallcollection.loan_id + '/' + overallcollection.user_id]" target="_blank" title="View Customer Detail">{{ overallcollection.loan_id }}</a>
+                <span *ngIf="overallcollection.customerReapply" class="flag-warning"> {{overallcollection.customerReapply}} </span>
+                <span *ngIf="overallcollection.customerOverdue" class="flag-danger"> {{overallcollection.customerOverdue}} </span>
+                <span *ngIf="overallcollection.customerExtend" class="flag-primary"> {{overallcollection.customerExtend}} </span>
+              </td>
+              <td>
+                {{ overallcollection.customerName }}
+              </td>
+              <td>
+                {{ overallcollection.customerMobileNumber }}
+              </td>
+              <td>
+                {{ overallcollection.customerEmail }}
+              </td>
+              <td>
+                {{ overallcollection.apply_date | date: 'dd-MM-yyyy' }}
+              </td> 
+              <td>
+                {{ overallcollection.disbursed_date | date: 'dd-MM-yyyy' }}
+              </td>
+              <td>
+                {{ overallcollection.required_amount }}
+              </td>
+              <td>
+                {{ overallcollection.remaining_amount }}
+              </td>
+              <td> 
+                {{ calculateDiff(overallcollection.payable_date) }}
+              </td> 
+              <td *ngIf="overallcollection.remark">
+                {{ overallcollection.remark }}
+              </td>
+              <td *ngIf="!overallcollection.remark">
+                No Remark Yet
+              </td> 
+              <td *ngIf="overallcollection.remarkDate">
+                {{ overallcollection.remarkDate }}
+              </td>
+              <td *ngIf="!overallcollection.remarkDate">
+                No Remark Yet
+              </td> 
+              <td *ngIf="overallcollection.remarker">
+                {{ overallcollection.remarker }}
+              </td>
+              <td *ngIf="!overallcollection.remarker">
+                No Remark Yet
+              </td>
+              <!-- Start Collection Teams -->
+              <td *ngIf="overallcollection.customer_care != 0 && overallcollection.s1 == 0">
+                Customer Support  
+              </td> 
+              <td *ngIf="overallcollection.s1 != 0 && overallcollection.s2 == 0">
+                S1  
+              </td>
+              <td *ngIf="overallcollection.s2 != 0 && overallcollection.s3 == 0">
+                S2  
+              </td>
+              <td *ngIf="overallcollection.s3 != 0 && overallcollection.m1 == 0">
+                S3  
+              </td>
+              <td *ngIf="overallcollection.m1 != 0 && overallcollection.m2 == 0">
+                M1  
+              </td>
+              <td *ngIf="overallcollection.m2 != 0 && overallcollection.collection_manager == 0">
+                M2  
+              </td>
+              <td *ngIf="overallcollection.collection_manager != 0">
+                Collection Manager  
+              </td>
+              <!-- end Collection Teams -->
+              <!-- Start Assign User -->
+              <td *ngIf="overallcollection.customer_care != 0 && overallcollection.s1 == 0">
+                <div *ngFor="let user of users" class="checkbox-toggle"> 
+                  <span *ngIf="user.id === overallcollection.customer_care">{{user.firstname}}</span>
+                </div>
+              </td> 
+              <td *ngIf="overallcollection.s1 != 0 && overallcollection.s2 == 0">
+                <div *ngFor="let user of users" class="checkbox-toggle"> 
+                  <span *ngIf="user.id === overallcollection.s1">{{user.firstname}}</span>
+                </div>
+              </td>
+              <td *ngIf="overallcollection.s2 != 0 && overallcollection.s3 == 0">
+                <div *ngFor="let user of users" class="checkbox-toggle"> 
+                  <span *ngIf="user.id === overallcollection.s2">{{user.firstname}}</span>
+                </div>
+              </td>
+              <td *ngIf="overallcollection.s3 != 0 && overallcollection.m1 == 0">
+                <div *ngFor="let user of users" class="checkbox-toggle"> 
+                  <span *ngIf="user.id === overallcollection.s3">{{user.firstname}}</span>
+                </div>
+              </td>
+              <td *ngIf="overallcollection.m1 != 0 && overallcollection.m2 == 0">
+                <div *ngFor="let user of users" class="checkbox-toggle"> 
+                  <span *ngIf="user.id === overallcollection.m1">{{user.firstname}}</span>
+                </div>
+              </td>
+              <td *ngIf="overallcollection.m2 != 0 && overallcollection.collection_manager == 0">
+                <div *ngFor="let user of users" class="checkbox-toggle"> 
+                  <span *ngIf="user.id === overallcollection.m2">{{user.firstname}}</span>
+                </div>
+              </td>
+              <td *ngIf="overallcollection.collection_manager != 0">
+                <div *ngFor="let user of users" class="checkbox-toggle"> 
+                  <span *ngIf="user.id === overallcollection.collection_manager">{{user.firstname}}</span>
+                </div>
+              </td> 
+              <!-- end Assign User -->    
+            </tr>
+          </ng-container>
+          <tr *ngIf="!overallCollections.length">
+            <td colspan="14" class="text-center">No records.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="overallCollections.length" [hidden]="isShow" class="pagination pagination-sm m-0 float-right">
+        <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+      </div>
+    <!-- </div> -->
+  </div>
+</section>
+ <!-- Addreminder Model Popup -->
+<ng-template #rempopup let-modal>
+  <div class="modal-header modal-copy-header">
+     <h5 class="headerTitle m_header">Add Reminder</h5>
+     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+     </button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="choose_date">Loan Id</label>
+    <input type="text" class="form-control" name="choose_date" [(ngModel)]="reminder.loan_id" #choose_date="ngModel" [disabled]="reminder.loan_id"/>
+    </div>
+    <div class="mb-3">
+   <label for="choose_date">To Date</label>
+    <input type="datetime-local" class="form-control" name="choose_date" [(ngModel)]="reminder.choose_date" #choose_date="ngModel" [min]="today"/>
+  </div>
+  <div class="mb-3">
+    <label for="description">Description</label>
+    <textarea class="form-control" rows="3" name="description" [(ngModel)]="reminder.description" #description="ngModel"  required></textarea>
+  </div>
+  <div class="mb-3 d-flex justify-content-end">
+    <button type="button" class="btn btn-success" (click)="saveReminder()">Save</button>
+  </div>
+  </div>
+</ng-template>

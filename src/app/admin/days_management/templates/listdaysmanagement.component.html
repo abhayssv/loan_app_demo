@@ -1,0 +1,43 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Days Management</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Days Management</li>
+        </ol> 
+      </div>
+    </div>
+  </div>
+</header> 
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <table id="listdaysmanagement" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr> 
+        <th>Id</th>
+        <th>Name</th>
+        <th>Status</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let daysmanagement of daysmanagement" [attr.id]="daysmanagement.id">  
+        <td>
+          {{ daysmanagement.id }}
+        </td>
+        <td>
+          {{ daysmanagement.time }}
+        </td>
+        <td class="text-center">
+          <div class="checkbox-toggle">
+            <input type="checkbox" id="check-toggle-{{ daysmanagement.id }}-status" [(ngModel)]="daysmanagement.status"
+              onclick="return confirm('Are you sure, you want to change status of this user ?');"
+              (change)="changeStatus(daysmanagement,'status')">
+            <label for="check-toggle-{{ daysmanagement.id }}-status"></label>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

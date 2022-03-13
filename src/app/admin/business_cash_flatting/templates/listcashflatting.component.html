@@ -1,0 +1,426 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Business Cash Flatting</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Business Cash Flatting</li>
+        </ol> 
+      </div>
+      <div class="tbl-cell ref-btn">
+        <button class="btn btn-primary" (click)="refresh()"><i class="fa fa-repeat"></i> Refresh</button> 
+      </div>
+    </div>
+  </div>
+</header>
+<section class="box-typical box-typical-padding">
+  <h5>Search & Filter</h5>
+  <form name="form" (ngSubmit)="searchFlat(f.value)" #f="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="loan_id">Loan Id</label>
+        <input type="number" class="form-control" #loanId name="loan_id" [(ngModel)]="searchcashflatting.loan_id" #loan_id="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="mobile_no">Mobile Number</label>
+        <input type="number" class="form-control" name="mobile_no" [(ngModel)]="searchcashflatting.mobile_no" #mobile_no="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" name="email" [(ngModel)]="searchcashflatting.email" #email="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="name">Customer Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="searchcashflatting.name" #name="ngModel">
+      </div>
+    </div><br>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="id_number">Adhaar Number</label>
+        <input type="number" class="form-control" name="id_number" [(ngModel)]="searchcashflatting.id_number" #id_number="ngModel">
+      </div>
+    </div>
+    <div class="row m-t-1">
+      <div class="col-md-2 search-button">
+        <button class="btn btn-primary" ><i class="fa fa-search"></i> Search</button>
+      </div>
+      <div class="col-md-2 search-button">
+        <span (click)="reset()" class="btn btn-warning" title="Reset Filter">Reset Filter</span> 
+      </div>
+    </div>
+  </form>
+</section>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding" style="height: 1000px">
+  <table id="listcashflattings" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr> 
+        <th>Loan Id</th>
+        <th>Name</th>
+        <th>Mobile No</th>
+        <th>Email</th> 
+        <th>Apply Date</th> 
+        <th>Disbursed Date</th> 
+        <th>Payable Amount</th>
+        <th>Payable Date</th>
+        <th>Remaining Amount</th> 
+        <th>Penality</th> 
+        <th>Outstanding Amount to Pay(Inc. Penality)</th> 
+        <th>Action</th>  
+      </tr>
+    </thead>
+    <tbody  [class]="isLoading ?'vizzve-loading':''">
+      <ng-container *ngFor="let cashflatting of cashflattings | paginate: { itemsPerPage: limit, currentPage: p, totalItems: total }">
+      <tr> 
+        <td>
+          <a [routerLink]="['/business_cash_flatting/view/' + cashflatting.loan_id + '/' + cashflatting.user_id]" target="_blank" title="View Customer Detail"> {{ cashflatting.loan_id }}</a> 
+        </td>
+        <td>
+          {{ cashflatting.appUser.username }}
+        </td>
+        <td>
+          {{ cashflatting.appUser.mobile_no }}
+        </td>
+        <td>
+          {{ cashflatting.appUser.email }}
+        </td>
+        <td>
+          {{ cashflatting.apply_date | date: 'dd-MM-yyyy' }}
+        </td>
+        <td>
+          {{ cashflatting.disbursed_date | date: 'dd-MM-yyyy' }}
+        </td>
+        <td>
+          {{ cashflatting.remaining_amount | number: '1.2-2'}}
+        </td>
+        <td>
+          {{ cashflatting.payable_date | date: 'dd-MM-yyyy' }}
+        </td>
+        <td>
+          {{ cashflatting.remaining_amount | number: '1.2-2'}}
+        </td>
+        <td>
+          {{ (cashflatting.paymentInfo.penalityNonPaid)| number:'1.2-2' }}
+        </td>
+        <td>
+          {{ cashflatting.paymentInfo.remainingAmtPay | number:'1.2-2' }}
+        </td>
+        <td>
+          <button class="btn btn-primary plus-popup m-2 m_popup" (click)="flatPop(fpopup,cashflatting)">Flat</button>
+          <!-- <button class="btn btn-primary plus-popup m-2 m_popup" (click)="customExtend(cpopup,cashflatting)">Custom Extend</button> -->
+          <!-- Flat modal Popup -->
+          <ng-template #fpopup let-modal>
+             <div class="modal-header modal-copy-header">
+                <h5 class="headerTitle m_header">Cash Flatting</h5>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                   <span aria-hidden="true">&times;</span>
+                </button>
+             </div>
+             <div class="modal-body">
+                <div class="config-popup">
+                  <form name="form" (ngSubmit)="fp.form.valid && saveflat(fp.value)" #fp="ngForm" novalidate>
+                    <div class="col-sm-12 p-0">
+                      <div class="card">
+                      <div class="card-header bg-header">Customer Info</div>
+                      <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12"> 
+                          <label for="order_amount" class="required semibold form-label">Customer Name: <b>{{ cashflatting.appUser.username }} </b></label>
+                        </div> 
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12"> 
+                          <label for="order_amount" class="required semibold form-label">Loan ID: <b>{{ cashflatting.loan_id }}</b></label>
+                        </div> 
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12"> 
+                          <label for="order_amount" class="required semibold form-label">Loan Amount: <b>{{ cashflatting.required_amount }}</b></label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12"> 
+                          <label for="order_amount" class="required semibold form-label">Payable Loan Amount: <b>{{ transactionSummary.amountTotal }}</b></label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12"> 
+                          <label for="order_amount" class="required semibold form-label">Amount Paid: <b>{{ (transactionSummary.amountTotalPaid) | number: '1.2-2' }}</b></label>
+                        </div>
+                      </div>
+                 
+                    </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header bg-header">OutStanding</div>
+                      <div class="card-body">
+                        <div class="row" *ngIf="transactionSummary.penaltyAfterPaymentDay && transactionSummary.penalityNonPaid">
+                        <div class="col-md-12"> 
+                          <label for="order_amount" class="required semibold form-label">Penality After Payment Date: <b>{{ ( transactionSummary.penaltyAfterPaymentDay) | number: '1.2-2' }}</b></label>
+                        </div>
+                      </div>
+                       <div class="row">
+                        <div class="col-md-12"> 
+                          <label for="order_amount" class="required semibold form-label">Amount to Pay(Inc.Penality): <b>{{ transactionSummary.remainingAmtPay| number: '1.2-2' }}</b></label>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="card" *ngIf="transactionDetails.length">
+                        <div class="card-header bg-header">
+                            <label>
+                             Installments
+                            </label>
+                        </div>
+                        <div  class="card-body scroller payments-box">
+                          <div *ngFor="let each of transactionDetails index as i" >
+                            <div class="d-flex">
+                            <div class="trans-check-box">
+                               <input *ngIf="!each.paid"  
+                                [checked]="each.isSelected" 
+                               type="checkbox" class="m-2 trans-checkbox" name="check" 
+                               (change)="changeEvent(i, $event.target.checked)">
+                            </div>
+                            <div>
+                              <div class="p-1">
+                                Date: <b>{{each.forDate}}</b>
+                              </div>
+
+                              <div *ngIf="each.amountWithoutPenalty" class="p-1">Today's Amount: 
+                                <b>{{each.amountWithoutPenalty}}</b>
+                              </div>
+
+                              <div *ngIf="each.penality && transactionSummary.penalityNonPaid" class="p-1">
+                                Penality: <b>{{each.penality}}</b>
+                              </div>
+
+
+                              <div class="p-1"> 
+                                Installment: <b>{{each.installment}}</b>
+                              </div>
+
+                              <div class="p-1">Status: 
+                                <b [ngClass]="{'text-success': each.paid, 'text-danger': !each.paid}">
+                                {{each.paid? 'Paid': 'Non Paid'}}</b>
+                              </div>
+
+                              <div class="p-1">Payment On Time: 
+                                <b [ngClass]="{'text-success': each.paidOnCorrectDay, 'text-danger': !each.paidOnCorrectDay}">
+                                {{each.paidOnCorrectDay? 'Yes': 'No'}}</b>
+                              </div>
+
+                            </div>
+                            </div>
+
+                            <hr *ngIf="i !== transactionDetails.length-1"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="transactionDetails.length">
+                         <div class="col-md-12">
+
+                           <div class="form-group" [ngClass]="{ 'has-error': fp.submitted  && order_amount.invalid }">
+                            <label><b>Amount to pay</b></label>
+                            <input autocomplete="off" type="text" class="form-control"  name="order_amount"  [(ngModel)]="payAmount"  placeholder="Amount to pay" #order_amount="ngModel" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" required  [disabled]="isChecked" (keyup)="onChangeAmnt(f)"/>
+                            <div *ngIf="fp.submitted  && order_amount.invalid && !validationMsg" class="help-block">Amount to pay field is required</div>
+                            <div *ngIf="validationMsg" class="help-block"> {{validationMsg}}
+                            </div>
+                            
+                          </div>
+                         </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12"> 
+                          <input type="hidden" name="loan_id" [(ngModel)]="cashflatting.loan_id" #id="ngModel">
+                          <button class="btn btn-primary mt-2" [disabled]="submitted">Submit</button>
+                        </div> 
+                      </div>
+                    </div> 
+                  </form> 
+                <div>  
+                </div>  
+             </div>
+             </div>
+          </ng-template>
+
+          <!-- Extend Model Popup -->
+          <ng-template #epopup let-modal>
+            <div class="modal-header modal-copy-header">
+               <h5 class="headerTitle m_header">Loan Extend</h5>
+               <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+              <div class="config-popup">
+                <form name="form" (ngSubmit)="f.form.valid && saveExtend(f.value)" #f="ngForm" novalidate>
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <div class="col-md-12"> 
+                        <label for="order_amount" class="required semibold form-label">Customer Name: <b>{{ cashflatting.appUser.username }} </b></label>
+                      </div> 
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12"> 
+                        <label for="order_amount" class="required semibold form-label">Loan ID: <b>{{ cashflatting.loan_id }}</b></label>
+                      </div> 
+                    </div>
+                    <!-- <div class="row">
+                      <div class="col-md-12"> 
+                        <label for="order_amount" class="required semibold form-label">Loan Amount: <b>{{ cashflatting.required_amount }}</b></label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12"> 
+                        <label for="order_amount" class="required semibold form-label">Interest: <b>{{ cashflatting.remaining_amount * 0.01 | number }}</b></label>
+                      </div>
+                    </div> -->
+                    <div class="row" *ngIf="calculateDiff(cashflatting.payable_date) > 0">
+                      <div class="col-md-12" *ngIf="{ amount: calculateDiff(cashflatting.payable_date) > 0 ? cashflatting.remaining_amount * calculateDiff(cashflatting.payable_date) * 0.006  : 0 } as penality"> 
+                        <label for="order_amount" class="required semibold form-label">Penality: <b>{{ penality.amount | number : '1.2-2' }}</b></label>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="calculateDiff(cashflatting.payable_date) > 0">
+                      <div class="col-md-12"> 
+                        <label for="order_amount" class="required semibold form-label">Orders Amount: <b>{{ cashflatting.remaining_amount + cashflatting.remaining_amount * calculateDiff(cashflatting.payable_date) * 0.006 }}</b></label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12"> 
+                        <input type="hidden" name="loan_id" [(ngModel)]="cashflatting.loan_id" #id="ngModel">
+                        <div class="form-group" *ngIf="{ amount: cashflatting.remaining_amount + cashflatting.remaining_amount * calculateDiff(cashflatting.payable_date) * 0.006 } as required" [ngClass]="{ 'has-error': f.submitted && !required_amount.valid }">
+                          <label for="required_amount" class="required semibold form-label">Loan Amount:</label>
+                          <input type="text" class="form-control" name="required_amount" placeholder="Enter Amount" [(ngModel)]="required.amount" #required_amount="ngModel" readonly required>
+                          <div *ngIf="f.submitted && !required_amount.valid" class="help-block">Loan amount field is required</div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !ext_required_amount.valid}">
+                          <label for="ext_required_amount" class="required semibold form-label">Amount required for Extends:</label>
+                          <input type="text" class="form-control" name="ext_required_amount" placeholder="Enter Amount" [(ngModel)]="cashflatting.ext_required_amount" #ext_required_amount="ngModel" required>
+                          <div *ngIf="f.submitted && !ext_required_amount.valid" class="help-block">Extend amount field is required</div>
+                        </div> 
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !interest.valid}">
+                          <label for="interest" class="required semibold form-label">Interest Amount:</label>
+                          <input type="text" class="form-control" name="interest" placeholder="Enter Amount" [(ngModel)]="cashflatting.interest" #interest="ngModel" required>
+                          <div *ngIf="f.submitted && !interest.valid" class="help-block">Interest amount field is required</div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !ext_days.valid}">
+                          <label for="ext_days" class="required semibold form-label">Extend Days:</label>
+                          <input type="text" class="form-control" name="ext_days" placeholder="Enter Days" [(ngModel)]="cashflatting.ext_days" #ext_days="ngModel" required>
+                          <div *ngIf="f.submitted && !ext_days.valid" class="help-block">Extend Days field is required</div>
+                        </div>
+                        <div class="col-md-12"> 
+                          <label for="order_amount" *ngIf="{ amount: cashflatting.remaining_amount + cashflatting.remaining_amount * calculateDiff(cashflatting.payable_date) * 0.006 } as required" class="required semibold form-label">Payable Amount: <b>{{(required.amount--cashflatting.interest)? required.amount--cashflatting.interest : required.amount }}</b></label>
+                        </div>
+                        <button class="btn btn-primary mt-2">Submit</button>
+                      </div> 
+                    </div> 
+                  </div> 
+                </form> 
+              <div>   
+            </div>  
+         </div>
+            </div>
+          </ng-template>
+          <!-- Custom Extend Model Popup -->
+          <ng-template #cpopup let-modal>
+            <div class="modal-header modal-copy-header">
+               <h5 class="headerTitle m_header">Custom Loan Extend</h5>
+               <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+              <div class="config-popup">
+                <form name="form" (ngSubmit)="f.form.valid && saveCustomExtend(f.value)" #f="ngForm" novalidate>
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <div class="col-md-12"> 
+                        <label for="order_amount" class="required semibold form-label">Customer Name: <b>{{ cashflatting.appUser.username }} </b></label>
+                      </div> 
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12"> 
+                        <label for="order_amount" class="required semibold form-label">Loan ID: <b>{{ cashflatting.loan_id }}</b></label>
+                      </div> 
+                    </div>
+                    <!-- <div class="row">
+                      <div class="col-md-12"> 
+                        <label for="order_amount" class="required semibold form-label">Loan Amount: <b>{{ cashflatting.required_amount }}</b></label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12"> 
+                        <label for="order_amount" class="required semibold form-label">Interest: <b>{{ cashflatting.remaining_amount * 0.01 | number }}</b></label>
+                      </div>
+                    </div> -->
+                    <div class="row" *ngIf="calculateDiff(cashflatting.payable_date) > 0">
+                      <div class="col-md-12" *ngIf="{ amount: calculateDiff(cashflatting.payable_date) > 0 ? cashflatting.remaining_amount * calculateDiff(cashflatting.payable_date) * 0.006  : 0 } as penality"> 
+                        <label for="order_amount" class="required semibold form-label">Penality: <b>{{ penality.amount | number : '1.2-2' }}</b></label>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="calculateDiff(cashflatting.payable_date) > 0">
+                      <div class="col-md-12"> 
+                        <label for="order_amount" class="required semibold form-label">Orders Amount: <b>{{ cashflatting.remaining_amount + cashflatting.remaining_amount * calculateDiff(cashflatting.payable_date) * 0.006 }}</b></label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12"> 
+                        <input type="hidden" name="loan_id" [(ngModel)]="cashflatting.loan_id" #id="ngModel">
+                        <div class="form-group" *ngIf="{ amount: cashflatting.remaining_amount + cashflatting.remaining_amount * calculateDiff(cashflatting.payable_date) * 0.006 } as required" [ngClass]="{ 'has-error': f.submitted && !required_amount.valid }">
+                          <label for="required_amount" class="required semibold form-label">Loan Amount:</label>
+                          <input type="text" class="form-control" name="required_amount" placeholder="Enter Amount" [(ngModel)]="required.amount" #required_amount="ngModel" readonly required>
+                          <div *ngIf="f.submitted && !required_amount.valid" class="help-block">Loan amount field is required</div>
+                        </div>
+                        <div class="form-group" >
+                          <label><input type="checkbox" checked (click)="toggleShow()" /> Amount required</label>
+                          <!-- <label for="ext_required_amount" class="required semibold form-label">Amount required for Extends:</label> -->
+                          <!-- <input type="text" class="form-control" name="ext_required_amount" placeholder="Enter Amount" [(ngModel)]="cashflatting.ext_required_amount" #ext_required_amount="ngModel" required>
+                          <div *ngIf="f.submitted && !ext_required_amount.valid" class="help-block">Extend amount field is required</div> -->
+                        </div>
+                        <div class="form-group"*ngIf="isShown" [ngClass]="{ 'has-error': f.submitted && !penality_deduct.valid}">
+                          <label for="penality_deduct" class="required semibold form-label">Penality deduct Amount:</label>
+                          <input type="text" class="form-control" name="penality_deduct" placeholder="Enter Amount" [(ngModel)]="cashflatting.penality_deduct" #penality_deduct="ngModel" required>
+                          <div *ngIf="f.submitted && !penality_deduct.valid" class="help-block">Interest amount field is required</div>
+                        </div> 
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !partial_amount.valid}">
+                          <label for="partial_amount" class="required semibold form-label">Partial Amount:</label>
+                          <input type="text" class="form-control" name="partial_amount" placeholder="Enter Amount" [(ngModel)]="cashflatting.partial_amount" #partial_amount="ngModel" required>
+                          <div *ngIf="f.submitted && !partial_amount.valid" class="help-block">Partial amount field is required</div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !ext_days.valid}">
+                          <label for="ext_days" class="required semibold form-label">Extend Days:</label>
+                          <input type="text" class="form-control" name="ext_days" placeholder="Enter Days" [(ngModel)]="cashflatting.ext_days" #ext_days="ngModel" required>
+                          <div *ngIf="f.submitted && !ext_days.valid" class="help-block">Extend Days field is required</div>
+                        </div>
+                        <div class="row">
+                        <div class="col-md-12"> 
+                          <label for="order_amount" *ngIf="{ amount: cashflatting.remaining_amount + cashflatting.remaining_amount * calculateDiff(cashflatting.payable_date) * 0.006 } as required" class="required semibold form-label">Payable Amount: <b>{{((required.amount-cashflatting.penality_deduct)? required.amount-cashflatting.penality_deduct  : required.amount) - ((cashflatting.partial_amount)? cashflatting.partial_amount : 0)}}</b></label>
+                        </div>
+                      </div>
+                      <button class="btn btn-primary mt-2">Submit</button>
+                      </div> 
+                    </div> 
+                  </div> 
+                </form> 
+              <div>   
+            </div>  
+            </div>
+            </div>
+          </ng-template>
+        </td> 
+      </tr>
+    </ng-container>
+    <tr *ngIf="cashflattings && cashflattings.length === 0 && !isLoading">
+      <td colspan="12">No Data Found</td>
+    </tr>
+    </tbody>
+
+  </table>
+   <div *ngIf="total> 10" class="pagination pagination-sm m-2 float-right {{isLoading ? 'is-disabled': ''}}">
+    <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+  </div>
+</section>

@@ -1,0 +1,50 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Pages</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Pages</li>
+        </ol>
+        <!-- <div class="add-button pull-right">
+          <a [routerLink]="['/pages/add/']" class="btn btn-inline btn-primary btn-sm" title="Add">Add Page</a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <table id="lispages" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Slug</th>
+        <th>Action</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let page of pages" [attr.id]="page.id">
+         
+        <td>
+          {{ page.page_id }}
+        </td>
+        <td>
+          {{ page.title }}
+        </td>
+        <td>
+          {{ page.slug }}
+        </td>
+        
+        <td class="text-center">
+          <a [routerLink]="['/pages/view/' + page.page_id]" class="btn btn-inline btn-primary btn-sm" title="View Page"><i class="fa fa-search"></i></a> 
+          
+          <a [routerLink]="['/pages/edit/' + page.page_id]" class="btn btn-inline btn-primary btn-sm" title="Edit Page"><i class="fa fa-pencil"></i></a>
+           
+        </td> 
+      </tr>
+    </tbody>
+  </table>
+</section>

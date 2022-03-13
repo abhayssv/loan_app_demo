@@ -1,0 +1,610 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>User Details</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/overall_customer_loan']">Overall Customer Applied</a></li>
+          <li class="active">User Details</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Loan Details -->
+<section class="box-typical box-typical-padding">
+  <h5>Loan Details | {{loanApplyCount}} ({{countUserLoan}})</h5>
+  <div class="row">
+    <div class="col-lg-12" *ngIf=" cashflatting"> 
+      <ul class="list-group list-group-horizontal">
+        <li class="col-lg-2 font-weight-bold list-group-item">Loan ID:</li>
+        <li class="col-lg-2 list-group-item">{{ cashflatting.loan_id }}</li>
+        <li class="col-lg-2 p-2 font-weight-bold list-group-item">Required Amount: </li>
+        <li class="col-lg-2 list-group-item">{{ cashflatting.required_amount | currency:'INR':'symbol-narrow' }}</li>
+        <li class="col-lg-2 font-weight-bold list-group-item">Days:</li>
+        <li class="col-lg-2 list-group-item">{{ cashflatting.days }}</li>
+      </ul>
+      <ul class="list-group list-group-horizontal">
+        <li class="col-lg-2 p-2 font-weight-bold list-group-item">Disbursed Amount:</li>
+        <li class="col-lg-2 list-group-item">{{ cashflatting.disbursed_amount | currency:'INR': 'symbol-narrow'}}</li>
+        <li class="col-lg-2 font-weight-bold list-group-item">Applied Date: </li>
+        <li class="col-lg-2 list-group-item">{{ cashflatting.apply_date | date}}</li>
+        <li class="col-lg-2 font-weight-bold list-group-item">Loan Status: </li>
+        <li class="col-lg-2 list-group-item">
+          <div *ngFor="let stat_us of loanStatus">
+            <div *ngIf="stat_us.status_id== cashflatting.status">
+              {{ stat_us.status }}
+            </div>
+          </div> 
+        </li>
+      </ul>
+      <ul class="list-group list-group-horizontal">
+        <li class="col-lg-2 p-2 font-weight-bold list-group-item">Use Coins:</li>
+        <li class="col-lg-2 list-group-item">{{ cashflatting.redeem_coins }}</li>
+        <li class="col-lg-2 font-weight-bold list-group-item">Payable Date: </li>
+        <li class="col-lg-2 list-group-item">{{ cashflatting.payable_date | date}}</li>
+        <li class="col-lg-2 font-weight-bold list-group-item">Payable Amount: </li>
+        <li class="col-lg-2 list-group-item">{{ cashflatting.total_payable_amount | currency:'INR': 'symbol-narrow' }}</li>
+      </ul>
+    </div> 
+  </div> 
+</section>
+<!-- End Loan Details -->
+<!-- Main content --> 
+<section class="box-typical box-typical-padding"> 
+  <h5>Personal Details</h5>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Email </label>
+        <span class="form-control maxlength-simple">{{ basic.email }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Mobile Number </label>
+        <span class="form-control maxlength-simple">{{ basic.mobile_no }}</span>
+      </fieldset>
+    </div> 
+  </div>
+</section>
+<!-- /.content -->
+<!-- Basic Information Section --> 
+<section *ngIf="basic" class="box-typical box-typical-padding"> 
+  <h5>Basic Information Details</h5>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Username: </label>
+        <span class="form-control maxlength-simple">{{ basic.username }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Gender </label>
+        <span class="form-control maxlength-simple">{{ basic.gender === 0 ? 'Male' : 'Female' }}</span>
+      </fieldset>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Father Name: </label>
+        <span class="form-control maxlength-simple">{{ basic.father_name }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Mother Name: </label>
+        <span class="form-control maxlength-simple">{{ basic.mother_name }}</span>
+      </fieldset>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Date of Birth: </label>
+        <span class="form-control maxlength-simple">{{ basic.date_of_birth }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Marital Status </label>
+        <span class="form-control maxlength-simple">{{ basic.marital_status === 0 ? 'Unmarried' : 'Married'}}</span>
+      </fieldset>
+    </div>  
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">WhatsApp Number: </label>
+        <span class="form-control maxlength-simple">{{ basic.watsapp_num }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Highest Qualification: </label>
+        <span class="form-control maxlength-simple">{{ basic.highest_qualification }}</span>
+      </fieldset>
+    </div>   
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Current Address: </label>
+        <textarea class="form-control" cols="10" rows="3" disabled>{{ basic.current_address }}</textarea> 
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Permanent Address: </label>
+        <textarea class="form-control" cols="10" rows="3" disabled>{{ basic.permanent_address }}</textarea> 
+      </fieldset>
+    </div>  
+  </div>
+</section>
+
+<!-- Employment Information Section --> 
+
+<section *ngIf="empInfo" class="box-typical box-typical-padding"> 
+  <h5>Employment Information Details</h5>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Company Name: </label>
+        <span class="form-control maxlength-simple">{{ empInfo.company_name }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Designation: </label>
+        <span class="form-control maxlength-simple">{{ empInfo.designation }}</span>
+      </fieldset>
+    </div>
+  </div> 
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Date of join </label>
+        <span class="form-control maxlength-simple">{{ empInfo.date_of_join }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Company Type </label>
+        <span class="form-control maxlength-simple">{{ empInfo.industry_type }}</span>
+      </fieldset>
+    </div>
+  </div> 
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Company Address </label>
+        <span class="form-control maxlength-simple">{{ empInfo.office_address }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Pin Code </label>
+        <span class="form-control maxlength-simple">{{ empInfo.pin_code }}</span>
+      </fieldset>
+    </div>
+  </div> 
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Monthly Take Home </label>
+        <span class="form-control maxlength-simple">{{ empInfo.monthly_take_home }}</span>
+      </fieldset>
+    </div>  
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Reason of Loan </label>
+        <span class="form-control maxlength-simple">{{ empInfo.reason_for_loan }}</span>
+      </fieldset>
+    </div>
+  </div> 
+  <div class="row">
+    <div class="col-lg-3" *ngIf="empInfo.employment_proof">
+      <label class="semibold form-label" for="firstname">Employment Proof</label> 
+      <div class="cont">
+        <a class="example-image-link" [href]="empInfo.employment_proof[0]" data-lightbox="adhaar-1" data-title="Employment Proof Image." ><img class="cont" [src]="empInfo.employment_proof[0]" alt="image-1" /></a>
+        <a [href]="empInfo.employment_proof[0]" [download]="empInfo.employment_proof[0]" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div>
+    </div>
+    <div class="col-lg-3" *ngIf="empInfo.sal_slip_first">
+      <label class="semibold form-label" for="email">Salary Slip </label>  
+      <div class="cont">
+        <a class="example-image-link" [href]="empInfo.sal_slip_first[0]" data-lightbox="adhaar-1" data-title="First Salary Slip Image." ><img class="cont" [src]="empInfo.sal_slip_first[0]" alt="image-1" /></a>
+        <a [href]="empInfo.sal_slip_first[0]" [download]="empInfo.sal_slip_first[0]" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div>
+    </div>
+    <div class="col-lg-3" *ngIf=" empInfo.sal_slip_second">
+      <label class="semibold form-label" for="email">Salary Image </label>
+      <div class="cont">
+        <a class="example-image-link" [href]="empInfo.sal_slip_second[0]" data-lightbox="adhaar-1" data-title="Second Salary Slip Image." ><img class="cont" [src]="empInfo.sal_slip_second[0]" alt="image-1" /></a>
+        <a [href]="empInfo.sal_slip_second[0]" [download]="empInfo.sal_slip_second[0]" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div>
+    </div>
+    <div class="col-lg-3" *ngIf=" empInfo.sal_slip_third">
+      <label class="semibold form-label" for="email">Salary Image </label>
+      <div class="cont">
+        <a class="example-image-link" [href]="empInfo.sal_slip_third[0]" data-lightbox="adhaar-1" data-title="Third Salary Slip Image." ><img class="cont" [src]="empInfo.sal_slip_third[0]" alt="image-1" /></a>
+        <a [href]="empInfo.sal_slip_third[0]" [download]="empInfo.sal_slip_third[0]" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div>
+    </div>
+  </div>
+</section> 
+<!-- Bank Details Section -->
+<section *ngIf=" bankInfo" class="box-typical box-typical-padding"> 
+  <h5>Bank Details</h5>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Account Name </label>
+        <span class="form-control maxlength-simple">{{ bankInfo.account_name }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Account Number </label>
+        <span class="form-control maxlength-simple">{{ bankInfo.account_no }}</span>
+      </fieldset>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Bank Name </label>
+        <span class="form-control maxlength-simple">{{ bankInfo.bank_name }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Branch </label>
+        <span class="form-control maxlength-simple">{{ bankInfo.branch }}</span>
+      </fieldset>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">IFSC Code </label>
+        <span class="form-control maxlength-simple">{{ bankInfo.ifsc_code }}</span>
+      </fieldset>
+    </div> 
+  </div>
+</section>
+<!-- KYC Details -->
+<section *ngIf=" kycInfo" class="box-typical box-typical-padding"> 
+  <h5>KYC Details</h5>
+  <div class="row">
+    <div class="col-lg-3">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Adhaar Number </label>
+        <span class="form-control maxlength-simple">{{ kycInfo.adhaar_no }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-3">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Adhaar Link Contact</label>
+        <span *ngIf="regMobNo" class="form-control maxlength-simple">*******{{ regMobNo }}</span>  
+        <!-- <button [ngClass]="{'adhaar_no' : adharContact}" class="form-control btn btn-primary" (click)="viewAdhaarNo()">View Contact</button> -->
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Pan Number </label>
+        <span class="form-control maxlength-simple">{{ kycInfo.pan_no }}</span>
+      </fieldset>
+    </div> 
+  </div>
+  <div class="row"> 
+    <div class="col-lg-3" *ngIf=" kycInfo.adhaar_front_image ">
+      <label class="semibold form-label" for="firstname">Adhaar Front Image </label> 
+      <div class="cont">
+        <a class="example-image-link" [href]="kycInfo.adhaar_front_image" data-lightbox="adhaar-1" data-title="Adhaar Card Front Image." ><img class="cont" [src]="kycInfo.adhaar_front_image" alt="image-1" /></a>
+        <a [href]="kycInfo.adhaar_front_image" [download]="kycInfo.adhaar_front_image" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div>
+    </div> 
+    <div class="col-lg-3" *ngIf=" kycInfo.adhaar_back_image ">
+      <label class="semibold form-label" for="firstname">Adhaar Back Image </label> 
+      <div class="cont">
+        <a class="example-image-link" [href]="kycInfo.adhaar_back_image" data-lightbox="adhaar-1" data-title="Adhaar Card Back Image." ><img class="cont" [src]="kycInfo.adhaar_back_image" alt="image-1" /></a>
+        <a [href]="kycInfo.adhaar_back_image" [download]="kycInfo.adhaar_back_image" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div>
+    </div> 
+    <div class="col-lg-3" *ngIf=" kycInfo.pan_card_image "> 
+      <label class="semibold form-label" for="firstname">Pan Card Image </label>
+      <div class="cont">
+        <a class="example-image-link" [href]="kycInfo.pan_card_image" data-lightbox="adhaar-1" data-title="Pan Card Image." ><img class="cont" [src]="kycInfo.pan_card_image" alt="image-1" /></a>
+        <a [href]="kycInfo.pan_card_image" [download]="kycInfo.pan_card_image" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div> 
+    </div> 
+    <div class="col-lg-3" *ngIf=" kycInfo.selfee_image ">
+      <label class="semibold form-label" for="firstname">Selfee Image </label> 
+      <div class="cont">
+        <a class="example-image-link" [href]="kycInfo.selfee_image" data-lightbox="adhaar-1" data-title="Selfee Image." ><img class="cont" [src]="kycInfo.selfee_image" alt="image-1" /></a>
+        <a [href]="kycInfo.selfee_image" [download]="kycInfo.selfee_image" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div> 
+    </div>
+  </div> 
+</section>
+<!-- College Details --> 
+<section *ngIf="collegeDetail" class="box-typical box-typical-padding"> 
+  <h5>College Details</h5>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">College Name</label>
+        <span class="form-control maxlength-simple">{{ collegeDetail.college_name }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Qualification </label>
+        <span class="form-control maxlength-simple">{{ collegeDetail.qualification }}</span>
+      </fieldset>
+    </div>  
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Reason of Loan </label>
+        <span class="form-control maxlength-simple">{{ collegeDetail.reason_of_loan }}</span>
+      </fieldset>
+    </div>  
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">College Address </label>
+        <span class="form-control maxlength-simple">{{ collegeDetail.college_address }}</span>
+      </fieldset>
+    </div>  
+    <div class="col-lg-6" *ngIf=" collegeDetail.college_id_image ">
+      <label class="semibold form-label" for="firstname">College Id Image </label> 
+      <div class="cont">
+        <a class="example-image-link" [href]="collegeDetail.college_id_image[0]" data-lightbox="adhaar-1" data-title="College Id Image." ><img class="cont" [src]="collegeDetail.college_id_image[0]" alt="image-1" /></a>
+        <a [href]="collegeDetail.college_id_image[0]" [download]="collegeDetail.college_id_image[0]" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div>
+    </div> 
+  </div>   
+</section>
+<!-- Business Details --> 
+<section *ngIf="businessDetail" class="box-typical box-typical-padding"> 
+  <h5>Business Details</h5>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Agreement Full Name</label>
+        <span class="form-control maxlength-simple">{{ businessDetail.agree_full_name }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Agreement Shop Name</label>
+        <span class="form-control maxlength-simple">{{ businessDetail.agree_shop_name }}</span>
+      </fieldset>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Shop Address </label>
+        <span class="form-control maxlength-simple">{{ businessDetail.shop_address }}</span>
+      </fieldset>
+    </div> 
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Reason of Loan </label>
+        <span class="form-control maxlength-simple">{{ businessDetail.reason_for_loan }}</span>
+      </fieldset>
+    </div> 
+  </div> 
+  <div class="row">
+    <div class="col-lg-4">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Daily Income </label>
+        <span class="form-control maxlength-simple">{{ businessDetail.daily_income }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-4">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Required Amount </label>
+        <span class="form-control maxlength-simple">{{ businessDetail.required_amount }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-4">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Days </label>
+        <span class="form-control maxlength-simple">{{ businessDetail.days }}</span>
+      </fieldset>
+    </div>  
+  </div> 
+  <div class="row">
+    <div class="col-lg-3" *ngIf=" businessDetail.bank_statement_image ">
+      <label class="semibold form-label" for="firstname">Bank Statement Image </label> 
+      <div class="cont">
+        <a class="example-image-link" [href]="businessDetail.bank_statement_image[0]" data-lightbox="adhaar-1" data-title="Bank Statement Image." ><img class="cont" [src]="businessDetail.bank_statement_image[0]" alt="image-1" /></a>
+        <a [href]="businessDetail.bank_statement_image[0]" [download]="businessDetail.bank_statement_image[0]" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a>  
+      </div>
+    </div>  
+    <div class="col-lg-3" *ngIf=" businessDetail.cheque_leaf_image ">
+      <label class="semibold form-label" for="firstname">Check Leaf Image </label> 
+      <div class="cont">
+        <a class="example-image-link" [href]="businessDetail.cheque_leaf_image[0]" data-lightbox="adhaar-1" data-title="Check Leaf Image." ><img class="cont" [src]="businessDetail.cheque_leaf_image[0]" alt="image-1" /></a>
+        <a [href]="businessDetail.cheque_leaf_image[0]" [download]="businessDetail.cheque_leaf_image[0]" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div>
+    </div>   
+    <div class="col-lg-3" *ngIf=" businessDetail.shop_image ">
+      <label class="semibold form-label" for="firstname">Shop Image </label> 
+      <div class="cont">
+        <a class="example-image-link" [href]="businessDetail.shop_image[0]" data-lightbox="adhaar-1" data-title="Shop Image." ><img class="cont" [src]="businessDetail.shop_image[0]" alt="image-1" /></a>
+        <a [href]="businessDetail.shop_image[0]" [download]="businessDetail.shop_image[0]" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div>
+    </div>
+    <div class="col-lg-3" *ngIf=" businessDetail.shop_agree_image ">
+      <label class="semibold form-label" for="firstname">Shop Agreement Image </label> 
+      <div class="cont">
+        <a class="example-image-link" [href]="businessDetail.shop_agree_image[0]" data-lightbox="adhaar-1" data-title="Shop Agreement Image." ><img class="cont" [src]="businessDetail.shop_agree_image[0]" alt="image-1" /></a>
+        <a [href]="businessDetail.shop_agree_image[0]" [download]="businessDetail.shop_agree_image[0]" target="_blank">
+          <div class="downloan-btn"><button class="btn btn-primary">Download Image</button></div> 
+        </a> 
+      </div>
+    </div> 
+  </div> 
+</section> 
+<!-- Reference Details -->
+<section class="box-typical box-typical-padding"> 
+  <h5>Reference Details</h5>
+  <div class="row"> 
+    <div class="col-lg-3" *ngIf=" refInfo">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Relation First </label>
+        <span class="form-control maxlength-simple">{{ refInfo.rel_first }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-3" *ngIf=" refInfo">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Mobile Number </label>
+        <span class="form-control maxlength-simple">{{ refInfo.number_first }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-3" *ngIf=" refInfo">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Relation Second </label>
+        <span class="form-control maxlength-simple">{{ refInfo.rel_second }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-3" *ngIf=" refInfo">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Mobile Number </label>
+        <span class="form-control maxlength-simple">{{ refInfo.number_second }}</span>
+      </fieldset>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-lg-3" *ngIf=" refInfo">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Relation Third </label>
+        <span class="form-control maxlength-simple">{{ refInfo.rel_third }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-3" *ngIf=" refInfo">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Mobile Number </label>
+        <span class="form-control maxlength-simple">{{ refInfo.number_third }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-3" *ngIf=" refInfo">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Relation Fourth </label>
+        <span class="form-control maxlength-simple">{{ refInfo.rel_foruth }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-3" *ngIf=" refInfo">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Mobile Number </label>
+        <span class="form-control maxlength-simple">{{ refInfo.number_fourth }}</span>
+      </fieldset>
+    </div> 
+  </div>
+</section>
+<!-- end Reference Details -->
+<section *ngIf="contactDetail?.length > 1" class="box-typical box-typical-padding">
+  <h5>User Contact  [ {{ contactDetail?.length }} ]</h5> 
+  <div class="row">
+    <div class="col-lg-6"> 
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">  
+        <table class="con_table"> 
+          <thead class="con_thead"> 
+            <tr class="con_tr">
+              <th>Name</th> 
+              <th>Contact No</th> 
+            </tr> 
+          </thead> 
+          <tbody class="con_tbody">
+            <tr *ngFor="let contact of contactDetail">      
+              <td>{{ contact.name }}</td>
+              <td>{{ contact.mobile_no }}</td>
+            </tr> 
+          </tbody>
+        </table>
+      </div>
+    </div>  
+  </div> 
+</section>
+<!-- end Contact Details -->
+<section *ngIf="appListDetails?.length > 1" class="box-typical box-typical-padding">
+  <h5>Application List [ {{appListDetails?.length}} ] </h5> 
+  <div class="row">
+    <div class="col-lg-6"> 
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">  
+        <table class="con_table"> 
+          <thead class="con_thead"> 
+            <tr class="con_tr">
+              <th class="text-center">Application Name</th> 
+            </tr> 
+          </thead> 
+          <tbody class="con_tbody">
+            <tr *ngFor="let appList of appListDetails">      
+              <td>{{ appList.app_list }}</td> 
+            </tr>  
+          </tbody>
+        </table>
+      </div>
+    </div>  
+  </div> 
+</section>
+<!-- end AppList Details -->
+<!-- Reviewer Section -->
+<section class="box-typical box-typical-padding" *ngIf="cashflatting"> 
+  <h5>Reviewer Details</h5>
+  <div class="row"> 
+    <div class="col-lg-12">
+      <ul class="list-group list-group-horizontal">
+        <li class="col-lg-3 font-weight-bold list-group-item">First Reviewer:</li>
+        <li class="col-lg-3 list-group-item"> 
+            <div *ngFor="let user of users"> 
+              <h5 style="font-weight: bold;" *ngIf="user.id == cashflatting.reviewer_1">{{user.firstname}} {{user.lastname}}</h5>
+            </div>  
+        </li>
+        <li class="col-lg-3 p-2 font-weight-bold list-group-item">Second Reviewer: </li>
+        <li class="col-lg-3 list-group-item" *ngIf="cashflatting.reviewer_2">
+          <div *ngFor="let user of users"> 
+            <h5 style="font-weight: bold;" *ngIf="user.id == cashflatting.reviewer_2">{{user.firstname}} {{user.lastname}}</h5>
+          </div>
+        </li> 
+        <li class="col-lg-3 list-group-item" *ngIf="!cashflatting.reviewer_2"> 
+            <h5 style="font-weight: bold;">Not Assign</h5> 
+        </li>
+      </ul>
+    </div> 
+  </div> 
+</section>
+<!-- End Reviewer Section -->

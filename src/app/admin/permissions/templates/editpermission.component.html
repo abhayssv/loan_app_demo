@@ -1,0 +1,40 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Edit Permission</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['//permissions']">Permissions</a></li>
+          <li class="active">Edit Permission</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content --> 
+<section class="box-typical box-typical-padding">
+  <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" enctype="multipart/form-data" novalidate>
+    <input type="hidden" name="id" [(ngModel)]="permission.id" #id="ngModel">
+    <div class="row m-t-1">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !per_name.valid}">
+              <label for="per_name" class="required semibold form-label">Permission Name</label>
+              <input type="text" class="form-control" name="per_name" [(ngModel)]="permission.per_name" #per_name="ngModel"
+                required>
+              <div *ngIf="f.submitted && !per_name.valid" class="help-block">Permission Name field is required</div>
+            </div>
+          </div>  
+        </div>  
+        <div class="col-md-12 align-middle">
+          <div class="form-group">
+            <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+            <a class="btn btn-primary" [routerLink]="['/permissions']">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

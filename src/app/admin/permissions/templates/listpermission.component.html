@@ -1,0 +1,50 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Permissions</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Permissions</li>
+        </ol>
+        <div class="add-button pull-right">
+          <a [routerLink]="['/permissions/add/']" class="btn btn-inline btn-primary btn-sm" title="Add">Add Permission</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <table id="lispermissions" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Permission</th>
+        <th style="text-align: center;">Action</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let permission of permissions" [attr.id]="permission.id">
+         
+        <td>
+          {{ permission.id }}
+        </td>
+        <td>
+          {{ permission.per_name }}
+        </td>  
+        <td class="text-center">
+          <a [routerLink]="['/permissions/view/' + permission.id]" class="btn btn-inline btn-primary btn-sm" title="View Permission"><i class="fa fa-search"></i></a> 
+          
+          <a [routerLink]="['/permissions/edit/' + permission.id]" class="btn btn-inline btn-primary btn-sm" title="Edit Permission"><i class="fa fa-pencil"></i></a>
+           
+          <span class="btn btn-inline btn-danger btn-sm" title="Delete User" (click)="delete1(permission.id)"><i class="fa fa-trash"></i></span>
+            
+        </td>
+        <!-- <td style="width:50%">
+          {{ permission.description }}
+        </td>   -->
+      </tr>
+    </tbody>
+  </table>
+</section>

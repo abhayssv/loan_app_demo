@@ -1,0 +1,29 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>App Email Settings</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">App Email Settings</li>
+        </ol> 
+      </div>
+    </div>
+  </div>
+</header>
+<section class="box-typical box-typical-padding min-ht">
+<div class="row">
+  <div class="col-md-6">
+  <div class="card">
+    <div class="card-body">
+        <div class="form-check" *ngFor="let each of emailsettings ; let i = index;">
+          <input class="form-check-input pointer" type="radio" name="email" [id]="each.email_type" [checked]="!!each.active" (change)="changeEmailSetting(each)">
+          <label class="form-check-label fs-3 pl-3 pointer" [for]="each.email_type">
+           {{each.email_name}}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>

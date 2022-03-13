@@ -1,0 +1,257 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Assing Loan Review</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Assing Loan Review</li>
+        </ol> 
+      </div>
+      <div class="tbl-cell ref-btn">
+        <button class="btn btn-primary" (click)="refresh()"><i class="fa fa-repeat"></i> Refresh</button> 
+      </div>
+    </div>
+  </div>
+</header>
+<!-- <section class="box-typical box-typical-padding">
+  <h5>Search & Filter</h5>
+  <form name="form" (ngSubmit)="save(f.value)" #f="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="from_date">From Date</label>
+        <input type="date" class="form-control"  name="from_date" [(ngModel)]="searchassignloan.from_date" #from_date="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="to_date">To Date</label>
+        <input type="date" class="form-control" name="to_date" [(ngModel)]="searchassignloan.to_date" #to_date="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="name">Customer Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="searchassignloan.name" #name="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" name="email" [(ngModel)]="searchassignloan.email" #email="ngModel">
+      </div> 
+    </div> <br> 
+    <div class="row">
+      <div class="col-md-3">
+        <label for="mobile_no">Mobile Number</label>
+        <input type="number" class="form-control"  name="mobile_no" [(ngModel)]="searchassignloan.mobile_no" #mobile_no="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="id_number">Adhaar Number</label>
+        <input type="number" class="form-control" name="id_number" [(ngModel)]="searchassignloan.id_number" #id_number="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="loan_id">Loan Id</label>
+        <input type="text" class="form-control" name="loan_id" [(ngModel)]="searchassignloan.loan_id" #loan_id="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="user_type">User Type</label>
+        <select class="form-control" name="user_type" [(ngModel)]="searchassignloan.user_type" #user_type="ngModel" required>
+          <option [ngValue]="null" disabled>select-user-type</option>
+          <option *ngFor="let userType of user_types" [ngValue]="userType.id">{{userType.name}}</option>
+        </select>
+      </div>   
+    </div><br>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="tenure">Tenure</label> 
+        <select class="form-control" name="tenure" [(ngModel)]="searchassignloan.tenure" #tenure="ngModel" required>
+          <option [ngValue]="null" disabled>select-tenure</option>
+          <option *ngFor="let tenure of tenures" [ngValue]="tenure.days">{{tenure.days}}</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="amount">Amount</label>
+        <select class="form-control" name="amount" [(ngModel)]="searchassignloan.amount" #amount="ngModel" required>
+          <option [ngValue]="null" disabled>select-tenure</option>
+          <option *ngFor="let amount of amounts" [ngValue]="amount.amount">{{amount.amount}}</option>
+        </select>
+      </div> 
+    </div>
+    <div class="row m-t-1">
+      <div class="col-md-2 search-button">
+        <button class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+      </div> 
+      <div class="col-md-2 search-button">
+        <span (click)="reset()" class="btn btn-warning" title="Reset Filter">Reset Filter</span> 
+      </div> 
+    </div>
+  </form>
+</section> -->
+
+<section class="box-typical box-typical-padding">  
+    <div class="row">
+      <div class="col-md-2">
+        <div class="col-md-2 search-button">
+          <span (click)="getData('4')" class="btn btn-warning active assginer" title="First Reviewer">First Reviewer</span> 
+        </div>
+      </div> 
+      <div class="col-md-2">
+        <div class="col-md-2 search-button">
+          <span (click)="getData('5')" class="btn btn-warning assginer" title="Second Reviewer">Second Reviewer</span> 
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="col-md-2 search-button">
+          <span (click)="getData('7')" class="btn btn-warning assginer" title="Customer Care">Customer Care</span> 
+        </div>
+      </div> 
+      <div class="col-md-2">
+        <div class="col-md-2 search-button">
+          <span (click)="getData('8')" class="btn btn-warning assginer" title="S1">S1</span> 
+        </div>
+      </div> 
+      <div class="col-md-2">
+        <div class="col-md-2 search-button">
+          <span (click)="getData('9')" class="btn btn-warning assginer" title="S2">S2</span> 
+        </div>
+      </div> 
+      <div class="col-md-2">
+        <div class="col-md-2 search-button">
+          <span (click)="getData('10')" class="btn btn-warning assginer" title="S3">S3</span> 
+        </div>
+      </div> 
+    </div><br>
+    <div class="row">
+      <div class="col-md-2">
+        <div class="col-md-2 search-button">
+          <span (click)="getData('11')" class="btn btn-warning assginer" title="M1">M1</span> 
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="col-md-2 search-button">
+          <span (click)="getData('12')" class="btn btn-warning assginer" title="M2">M2</span> 
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label style="padding:10px 0px 10px 5em; font-weight: 800;">Assign To</label> 
+      </div>
+      <div class="col-md-3"> 
+        <select class="form-control" name="assign_to" [(ngModel)]="searchassignloan.assign_to" #assign_to="ngModel" (change)="assignLoan(searchassignloan,'id')" >
+          <option [ngValue]="null">select-user-type</option>
+          <option *ngFor="let assigner of assigners" [ngValue]="assigner.id" onclick="return confirm('Are you sure, you want to assign of this users ?');">{{assigner.firstname}} {{assigner.lastname}}</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <div class="col-md-2 search-button">
+          <span (click)="autoAssignData(assigners[0].has_role)" class="btn btn-success assginer">Auto Assign</span> 
+        </div>
+      </div>
+    </div>   
+</section> 
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <table class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <!-- <th>Check</th>  -->
+        <th><input type="checkbox" name="allNonTrades" [value]="assignloans" (change)="allNonTrades($event)"> Loan Id</th>
+        <th>Name</th>
+        <th>Mobile No</th>
+        <th>Email</th>
+        <th>Loan Type</th> 
+        <th>Loan Amount</th> 
+        <th>Days</th>
+        <th>Apply Date</th> 
+        <th>Status</th>  
+        <th>Team</th>
+        <th>Assigned</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let assignloan of assignloans" [attr.id]="assignloan.id"> 
+        <td>
+          <!-- <input type="checkbox" [value]="assignloan.loan_id" (change)="onChange($event, assignloan.loan_id )"/>  -->
+          <input type="checkbox" name="assignloan" [checked]="assignloan.selected" [value]="assignloan.loan_id" (change)="changeTradesByCategory($event, assignloan.loan_id)">
+          <a [routerLink]="['/assign_loan/view/' + assignloan.loan_id + '/' + assignloan.user_id]" target="_blank" title="View Customer Detail"> {{ assignloan.loan_id }}</a>
+        </td> 
+        <td>
+          {{ assignloan.appUser.username }}
+        </td>
+        <td>
+          {{ assignloan.appUser.mobile_no }}
+        </td>
+        <td>
+          {{ assignloan.appUser.email }}
+        </td>
+        <td *ngIf="assignloan.appUser.user_type == 0">
+          Student
+        </td>
+        <td *ngIf="assignloan.appUser.user_type == 1">
+          Employment
+        </td>
+        <td *ngIf="assignloan.appUser.user_type == 2">
+          Business
+        </td>
+        <td>
+          {{ assignloan.required_amount }}
+        </td>
+        <td>
+          {{ assignloan.days }}
+        </td>
+        <td>
+          {{ assignloan.apply_date | date: 'dd-MM-yyyy'}}
+        </td>  
+        <td>
+          {{ assignloan.loanStatus.status }} 
+        </td> 
+        <td *ngIf="assignloan.status == 0">
+          First Review  
+        </td>
+        <td *ngIf="assignloan.status == 1">
+          Second Review  
+        </td>   
+        <!-- Start Collection Teams -->
+        <td *ngIf="assignloan.customer_care != 0 && assignloan.s1 == 0">
+          Customer Support  
+        </td> 
+        <td *ngIf="assignloan.s1 != 0 && assignloan.s2 == 0">
+          S1  
+        </td>
+        <td *ngIf="assignloan.s2 != 0 && assignloan.s3 == 0">
+          S2  
+        </td>
+        <td *ngIf="assignloan.s3 != 0 && assignloan.m1 == 0">
+          S3  
+        </td>
+        <td *ngIf="assignloan.m1 != 0 && assignloan.m2 == 0">
+          M1  
+        </td>
+        <td *ngIf="assignloan.m2 != 0 && assignloan.collection_manager == 0">
+          M2  
+        </td> 
+        <!-- end Collection Teams -->
+        <!-- Start Assign User -->
+        <td *ngIf="assignloan.reviewer_1 != 0 && assignloan.reviewer_2 == null">
+          {{assignloan.appUserReviewer_1.firstname}}  
+        </td>  
+        <td *ngIf="assignloan.reviewer_2 != 0 && assignloan.status == 1">
+          {{assignloan.appUserReviewer_2.firstname}}  
+        </td>   
+        <td *ngIf="assignloan.customer_care != 0 && assignloan.s1 == 0">
+           {{assignloan.customerCare.firstname}}  
+        </td> 
+        <td *ngIf="assignloan.s1 != 0 && assignloan.s2 == 0">
+          {{assignloan.S1.firstname}}  
+        </td> 
+        <td *ngIf="assignloan.s2 != 0 && assignloan.s3 == 0">
+          {{assignloan.S2.firstname}}  
+        </td> 
+        <td *ngIf="assignloan.s3 != 0 && assignloan.m1 == 0">
+          {{assignloan.S3.firstname}}  
+        </td> 
+        <td *ngIf="assignloan.m1 != 0 && assignloan.m2 == 0">
+          {{assignloan.M1.firstname}}  
+        </td> 
+        <td *ngIf="assignloan.m2 != 0 && assignloan.collection_manager == 0">
+          {{assignloan.M2.firstname}}  
+        </td> 
+        <!-- end Assign User -->
+      </tr>
+    </tbody>
+  </table>
+</section>

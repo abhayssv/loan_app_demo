@@ -1,0 +1,96 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Edit Loan</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Edit Loan</li>
+        </ol>
+        <!-- <div class="add-button pull-right">
+          <a [routerLink]="['/sub_category/add/']" class="btn btn-inline btn-primary btn-sm" title="Add">Add Edit Loan</a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</header>
+<section class="box-typical box-typical-padding">
+  <h5>Search & Filter</h5>
+  <form name="form" (ngSubmit)="search(f.value)" #f="ngForm" novalidate> 
+    <div class="row m-t-1">
+      <div class="col-md-3">
+        <input type="text" class="form-control" name="loan_id" placeholder="Enter Loan Id" [(ngModel)]="searchloan.loan_id" #loan_id="ngModel">
+      </div><br>  
+      <div class="col-md-2">
+        <button class="btn btn-primary form-control"><i class="fa fa-search"></i> Search</button>
+      </div> 
+      <div class="col-md-2">
+        <span (click)="reset()" class="btn btn-warning form-control" title="Reset Filter">Reset Filter</span>
+      </div>
+    </div>
+  </form>
+</section>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <div class="table-responsive">
+    <table class="display table table-bordered" cellspacing="0" width="100%">
+      <thead>
+        <tr> 
+          <th>Loan Id</th>
+          <th>Name</th>
+          <th>Mobile No</th>
+          <th>Email</th>
+          <th>Loan Type</th> 
+          <th>Loan Amount</th> 
+          <th>Days</th> 
+          <th>Apply Date</th>  
+          <th>Status</th>  
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let customer of editloan">
+          <tr> 
+            <td>
+              <a [routerLink]="['/edit_loan/edit/'  + customer.loan_id + '/' + customer.user_id]" target="_blank" title="View Customer Detail">{{ customer.loan_id }}</a> 
+              <span *ngIf="customer.customerReapply" class="flag-warning"> {{customer.customerReapply}} </span>
+              <span *ngIf="customer.customerOverdue" class="flag-danger"> {{customer.customerOverdue}} </span>
+              <span *ngIf="customer.customerExtend" class="flag-primary"> {{customer.customerExtend}} </span>
+            </td>
+            <td>
+              {{ customer.appUser.username }}
+            </td>
+            <td>
+              {{ customer.appUser.mobile_no }}
+            </td>
+            <td>
+              {{ customer.appUser.email }}
+            </td>
+            <td>
+              <span *ngIf="customer.appUser.user_type == 0">
+                Student
+              </span>
+              <span *ngIf="customer.appUser.user_type == 1">
+                Employment
+              </span>
+              <span *ngIf="customer.appUser.user_type == 2">
+                Business
+              </span>
+            </td>
+            <td>
+              {{ customer.required_amount }}
+            </td>
+            <td>
+              {{ customer.days}}
+            </td>  
+            <td>
+              {{ customer.apply_date | date: 'dd-MM-yyyy'}}
+            </td> 
+            <td>
+              {{customer.loanStatus.status}}
+            </td>   
+          </tr>
+        </ng-container> 
+      </tbody>
+    </table>  
+  </div>
+</section>

@@ -1,0 +1,63 @@
+<!-- Flat modal Popup -->
+<ng-template #payment let-modal>
+  <div class="modal-header modal-copy-header mt-5">
+     <h5 class="headerTitle m_header">Payment History</h5>
+     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click'); close.emit()">
+        <span aria-hidden="true">&times;</span>
+     </button>
+  </div>
+  <div class="modal-body">
+    <!-- End Loan Details -->
+    <section *ngIf="paymentHistory.length" class="box-typical box-typical-padding" style="overflow:auto; height: 350px;">
+      <table id="listrepaymentdetails" class="display table table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr> 
+            <th>Loan Id</th>
+            <th>Name</th>
+            <th>Mobile No</th>
+            <th>Email</th> 
+            <th>Payable Amount</th>
+            <th>Paid Amount</th> 
+            <th>Date & Time</th> 
+            <th>Payment Mode</th> 
+            <th>Status</th>  
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let repaymentdetail of paymentHistory" [attr.id]="repaymentdetail.id"> 
+            <td> {{ repaymentdetail.loan_id }} 
+            </td>
+            <td>
+              {{ repaymentdetail.appUser.username }}
+            </td>
+            <td>
+              {{ repaymentdetail.appUser.mobile_no }}
+            </td>
+            <td>
+              {{ repaymentdetail.appUser.email }}
+            </td>
+            <td>
+              {{ repaymentdetail.appApplyLoan ? repaymentdetail.appApplyLoan.total_payable_amount :'-' }}
+            </td>
+            <td>
+              {{ repaymentdetail.order_amount || repaymentdetail.payment_detail.orderAmount }}
+            </td>
+            <td>
+              {{ (repaymentdetail.tx_time || repaymentdetail.payment_detail.txTime) | date:'medium' }}
+            </td>  
+            <td>
+              {{ repaymentdetail.payment_mode || repaymentdetail.payment_detail.paymentMode }}
+            </td> 
+            <td>
+              {{ repaymentdetail.tx_status || repaymentdetail.payment_detail.txStatus }}
+            </td> 
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section *ngIf="!paymentHistory.length">
+      No Data Found
+    </section>
+    <!-- Main content -->
+  </div>  
+</ng-template>

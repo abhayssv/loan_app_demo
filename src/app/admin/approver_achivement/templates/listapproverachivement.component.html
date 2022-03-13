@@ -1,0 +1,99 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Approver Achievement Report</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Approver Achievement Report</li>
+        </ol> 
+      </div>
+    </div>
+  </div>
+</header>
+<section class="box-typical box-typical-padding">
+  <h5>Search & Filter</h5>
+  <form name="form" (ngSubmit)="search(f.value)" #f="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="from_date">From Date</label>
+        <input type="date" class="form-control" #loanId name="from_date" [(ngModel)]="searchapproverachivement.from_date" #from_date="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="to_date">To Date</label>
+        <input type="date" class="form-control" name="to_date" [(ngModel)]="searchapproverachivement.to_date" #to_date="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="user_type">Collection Team</label> 
+        <select class="form-control" class="form-control" name="collection_team" [(ngModel)]="searchapproverachivement.collection_team" #collection_team="ngModel" required (change)="onChangeCollection($event.target.value)">
+          <option disabled>Select-Team</option>
+          <option value="4">First Reviewer</option>
+          <option value="5">Second Reviewer</option> 
+        </select>
+      </div>  
+      <div class="col-md-3">
+        <label for="assigned_users">Assigned Users</label> 
+        <select class="form-control" name="assigned_users" [(ngModel)]="searchapproverachivement.assigned_users" #assigned_users="ngModel" required>
+          <option disabled>select-users</option>
+          <option *ngFor="let user of users" [value]="user.id">{{user.firstname}} {{user.lastname}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row m-t-1">
+      <div class="col-md-2 search-button">
+        <button class="btn btn-primary" (click) = search()><i class="fa fa-search"></i> Search</button>
+      </div> 
+      <div class="col-md-2 search-button">
+        <span (click)="reset()" class="btn btn-warning" title="Reset Filter">Reset Filter</span> 
+      </div>
+      <!-- <div class="col-md-7 export-button">
+        <span (click)="exportSheet()" class="btn btn-success {{exporting ? 'is-disabled blink' : ''}} {{isLoading? 'is-disabled':''}}" title="Export Report"><i class="fa fa-file-excel-o" aria-hidden="true"></i>{{!exporting ? 'Export Sheet': 'Please Wait...'}}</span> 
+      </div> -->
+    </div>
+  </form>
+</section>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <table class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr> 
+        <th>User Name</th>
+        <th>User Role</th>
+        <th>Email</th>
+        <th>Mobile No</th>  
+        <th>Assign Loan</th> 
+        <th>Approved/Disbursed Loan</th>
+        <th>Rejected Loan</th>
+        <th>User Status</th>  
+      </tr>
+    </thead>
+    <tbody *ngFor="let achivements of approverachivement" [attr.id]="achivements.id">
+      <tr> 
+        <td>
+          {{ achivements.username }}
+        </td>
+        <td>
+          {{ achivements.user_role }}
+        </td>
+        <td>
+          {{ achivements.email }}
+        </td> 
+        <td>
+          {{ achivements.mobile_no }}
+        </td> 
+        <td>
+          {{ achivements.assing_loan }}
+        </td>
+        <td>
+          {{ achivements.approved_loan }}
+        </td>
+        <td>
+          {{ achivements.rejected_loan }}
+        </td> 
+        <td>
+          {{ achivements.user_status }}
+        </td> 
+      </tr> 
+    </tbody>
+  </table> 
+</section>

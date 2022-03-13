@@ -1,0 +1,131 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Users</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Users</li>
+        </ol>
+        <div class="add-button pull-right">
+          <a [routerLink]="['/users/add/']" class="btn btn-inline btn-primary btn-sm" title="Add">Add User</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<section class="box-typical box-typical-padding">
+  <h5>Search & Filter</h5>
+  <form name="form" (ngSubmit)="search(f.value)" #f="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="searchUsers.name" #name="ngModel">
+      </div>  
+      <div class="col-md-3">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" name="email" [(ngModel)]="searchUsers.email" #email="ngModel">
+      </div>   
+      <div class="col-md-3">
+        <label for="mobile_no">Mobile No</label>
+        <input type="text" class="form-control" name="mobile_no" [(ngModel)]="searchUsers.mobile_no" #mobile_no="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="user_type">User Type</label>
+        <select class="form-control" name="user_type" [(ngModel)]="searchUsers.user_type" #user_type="ngModel" required>
+          <option disabled>select-type</option>
+          <option *ngFor="let user of userCategory" [value]="user.user_type">{{user.category}}</option>
+        </select>
+      </div>
+    </div><br>
+    <div class="row"> 
+      <div class="col-md-3">
+        <label for="user_role">User Role</label>
+        <select class="form-control" name="user_role" [(ngModel)]="searchUsers.user_role" #user_role="ngModel" required>
+          <option disabled>select-type</option>
+          <option *ngFor="let user of userSubCategory" [value]="user.id">{{user.name}}</option>
+        </select>
+      </div> 
+      <div class="col-md-3">
+        <label for="user_status">User Status</label>
+        <select class="form-control" name="user_status" [(ngModel)]="searchUsers.user_status" #user_status="ngModel" required>
+          <option disabled>select-type</option>
+          <option *ngFor="let status of userStatus" [value]="status.id">{{status.name}}</option>
+        </select>
+      </div>  
+    </div>
+    <div class="row m-t-1">
+      <div class="col-md-2 search-button">
+        <button class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+      </div> 
+      <div class="col-md-2 search-button">
+        <span (click)="reset()" class="btn btn-warning" title="Reset Filter">Reset Filter</span> 
+      </div> 
+    </div>
+  </form>
+</section>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <table id="lisusers" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr> 
+        <!-- <th>Id</th> -->
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+        <th>Mobile No</th> 
+        <th>Role</th>
+        <th>Contact Show<br>(Yes/No)</th>
+        <th>Active<br>(Yes/No)</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" [attr.id]="user.id">
+        <!-- <td>
+          {{ user.id }}
+        </td> -->
+        <td>
+          {{ user.firstname }}
+        </td>
+        <td>
+          {{ user.lastname }}
+        </td>
+        <td>
+          {{ user.email }}
+        </td>
+        <td>
+          {{ user.mobile_no }}
+        </td>
+        <td>
+          {{ user.adminSubCategory.name }}
+        </td>
+        <td class="text-center">
+          <div class="checkbox-toggle">
+            <input type="checkbox" id="check-toggle-{{ user.id }}-contact_per" [(ngModel)]="user.contact_per"
+              onclick="return confirm('Are you sure, you want to change contact list for this user ?');"
+              (change)="changeContactList(user,'contact_per')">
+            <label for="check-toggle-{{ user.id }}-contact_per"></label>
+          </div>
+        </td>
+        <td class="text-center">
+          <div class="checkbox-toggle">
+            <input type="checkbox" id="check-toggle-{{ user.id }}-active" [(ngModel)]="user.active"
+              onclick="return confirm('Are you sure, you want to change active of this user ?');"
+              (change)="changeStatus(user,'active')">
+            <label for="check-toggle-{{ user.id }}-active"></label>
+          </div>
+        </td>
+
+        <td class="text-center">
+          <a [routerLink]="['/users/view/' + user.id]" class="btn btn-inline btn-primary btn-sm" title="View Customer Detail"><i class="fa fa-search"></i></a>
+                
+          <a [routerLink]="['/users/edit/' + user.id]" class="btn btn-inline btn-primary btn-sm" title="Edit"><i class="fa fa-pencil"></i></a>
+           
+          <span class="btn btn-inline btn-danger btn-sm" title="Delete Customer" (click)="deleteUser(user.id)"><i class="fa fa-trash"></i></span>
+            
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

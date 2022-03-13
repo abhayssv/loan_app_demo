@@ -1,0 +1,64 @@
+<header class="section-header">
+    <div class="tbl">
+        <div class="tbl-row">
+            <div class="tbl-cell">
+                <h3> Extension Deal</h3>
+                <ol class="breadcrumb breadcrumb-simple">
+                    <li><a [routerLink]="['/']">Home</a></li>
+                    <li><a [routerLink]="['/extension_deal']">Extension Deal</a></li>
+                    <li class="active">Extension Deal</li>
+                </ol>
+               <div class="add-button pull-right">
+                  <a [routerLink]="['/extension_deal/add/']" class="btn btn-inline btn-primary btn-sm" title="Add">Add Extension Deal</a>
+               </div>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="box-typical box-typical-padding">
+  <table id="lisbusinessinterests" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>User Type</th>
+        <th>Level</th>
+        <th>Tenure</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let each of extension_deals"> 
+        <td>
+          {{userTypes[each.user_type]}}
+        </td>
+        <td>
+          {{levels[each.level]}}
+        </td>
+        <td>
+          {{each.tenure}}
+        </td>
+        <td>
+          {{each.amount}}
+        </td>
+        <td>
+        <div class="checkbox-toggle">
+            <input type="checkbox" [id]="'check-toggle-active-'+each.id" name="active" [(ngModel)]="each.status" (change)="changeStatus(each.id, each.status)">
+            <label [for]="'check-toggle-active-'+each.id"></label>
+        </div>
+        </td>
+        <td class="text-center">
+           <a  class="btn btn-inline btn-primary btn-sm" title="Edit text" [routerLink]="['/extension_deal/edit']" [state]="each">
+            <i class="fa fa-pencil"></i>
+           </a>
+           <span class="btn btn-inline btn-danger btn-sm" title="Delete" (click)="deleteExtensionDeal(each.id)">
+            <i class="fa fa-trash"></i>
+          </span>
+        </td>
+      </tr>
+      <tr *ngIf="!extension_deals.length">
+        <td colspan="4">No Data Found</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

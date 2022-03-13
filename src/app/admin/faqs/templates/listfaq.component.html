@@ -1,0 +1,51 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Faqs</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Faqs</li>
+        </ol>
+        <div class="add-button pull-right">
+          <a [routerLink]="['/faqs/add/']" class="btn btn-inline btn-primary btn-sm" title="Add">Add FAQ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <table id="lisfaqs" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Question</th>
+        <th>Action</th>
+        <!-- <th>Description</th>  --> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let faq of faqs" [attr.id]="faq.id">
+         
+        <td>
+          {{ faq.faq_id }}
+        </td>
+        <td>
+          {{ faq.question }}
+        </td>  
+        <td class="text-center">
+          <a [routerLink]="['/faqs/view/' + faq.faq_id]" class="btn btn-inline btn-primary btn-sm" title="View Faq"><i class="fa fa-search"></i></a> 
+          
+          <a [routerLink]="['/faqs/edit/' + faq.faq_id]" class="btn btn-inline btn-primary btn-sm" title="Edit Faq"><i class="fa fa-pencil"></i></a>
+           
+          <span class="btn btn-inline btn-danger btn-sm" title="Delete User" (click)="delete1(faq.faq_id)"><i class="fa fa-trash"></i></span>
+            
+        </td>
+        <!-- <td style="width:50%">
+          {{ faq.description }}
+        </td>   -->
+      </tr>
+    </tbody>
+  </table>
+</section>

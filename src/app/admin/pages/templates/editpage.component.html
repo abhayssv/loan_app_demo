@@ -1,0 +1,55 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Edit Page</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['//pages']">Pages</a></li>
+          <li class="active">Edit Page</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content -->
+
+<section class="box-typical box-typical-padding">
+  <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" enctype="multipart/form-data" novalidate>
+    <input type="hidden" name="page_id" [(ngModel)]="page.page_id" #id="ngModel">
+    <div class="row m-t-1">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group" >
+              <label for="title" class="required semibold form-label">Title</label>
+              <input type="text" class="form-control" name="title" [(ngModel)]="page.title" #title="ngModel">
+              <!-- <div *ngIf="f.submitted && !title.valid" class="help-block">Title field is required</div> -->
+            </div>
+          </div> 
+          <div class="col-md-6">
+            <fieldset class="form-group">
+              <label class="semibold form-label" for="email">Slug </label>
+              <span class="form-control maxlength-simple">{{ page.slug }}</span>
+            </fieldset>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid}">
+              <label for="description" class="required semibold form-label">Description</label> 
+                <angular-editor name="description" id="description" [(ngModel)]="page.description" [config]="editorConfig"></angular-editor>
+              <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
+            </div>
+          </div>
+        </div> 
+        <div class="col-md-12 align-middle">
+          <div class="form-group">
+            <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+            <a class="btn btn-primary" [routerLink]="['/pages']">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

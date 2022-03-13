@@ -1,0 +1,36 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Send Notification</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Send Notification</li>
+        </ol> 
+      </div>
+    </div>
+  </div>
+</header>
+<section class="box-typical box-typical-padding min-ht">
+<div class="card">  
+  <div class="card-body">
+  <form #f="ngForm">
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid}">
+      <label for="title" class="required semibold form-label">Title</label>
+      <input type="text" class="form-control" name="title" [(ngModel)]="notification.title" #title="ngModel" required maxlength="40">
+      <div *ngIf="f.submitted && !title.valid" class="help-block" >Title is required</div>
+  </div>
+  <div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid}">
+        <label for="description" class="required semibold form-label">Description</label>
+        <textarea type="text" class="form-control" row="3" name="description" [(ngModel)]="notification.body" #description="ngModel" required maxlength="60"></textarea>
+        <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
+    </div>
+  </div>
+  <div class="mb-3 d-grid gap-2 d-md-flex justify-content-md-end">
+     <button class="btn btn-primary" (click)= "sendNotification(f)">Submit</button>
+  </div>
+</form>
+</div>
+</div>
+</section>

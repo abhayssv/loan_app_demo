@@ -1,0 +1,70 @@
+<header class="section-header">
+    <div class="tbl">
+        <div class="tbl-row">
+            <div class="tbl-cell">
+                <h3>{{editView?'Edit':'Add'}} Extension Deal</h3>
+                <ol class="breadcrumb breadcrumb-simple">
+                    <li><a [routerLink]="['/']">Home</a></li>
+                    <li><a [routerLink]="['/extension_deal']">Extension Deal</a></li>
+                    <li class="active">{{editView?'Edit':'Add'}} Extension Deal</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="box-typical box-typical-padding">
+    <form name="form" (ngSubmit)="f.form.valid && save(f.value)" #f="ngForm" novalidate>
+        <div class="row m-t-1">
+            <div class="col-sm-12">
+
+            <div class="row">
+                    <div class="col-md-6">
+                         <div class="form-group">
+                            <label for="level">User Type</label>
+                            <select class="form-control" name="user_type" [(ngModel)]="extension.user_type" #user_type="ngModel" required [disabled]="extension.id">
+                              <option [value]="null">Select User Type</option>
+                              <option *ngFor="let each of userTypes" [value]="each.value">
+                                 {{each.label}}
+                              </option>
+                            </select>
+                            <div *ngIf="f.submitted && !user_type.valid" class="help-block text-danger">User Type field is required</div>
+                          </div>
+                          <div class="form-group">
+                            <label for="level">Level</label>
+                            <select class="form-control" name="level" [(ngModel)]="extension.level" #level="ngModel" required  [disabled]="extension.id">
+                              <option [value]="null">Select Level</option>
+                              <option *ngFor="let each of levels" [value]="each.value">
+                                {{each.label}}
+                              </option>
+                            </select>
+                            <div *ngIf="f.submitted && !level.valid" class="help-block text-danger">Level is required</div>
+                          </div>
+                        <div class="form-group">
+                            <label for="tenure" class="required semibold form-label">Tenure</label>
+                            <input type="number" class="form-control" name="tenure" [(ngModel)]="extension.tenure" #tenure="ngModel" required>
+                            <div *ngIf="f.submitted && !tenure.valid" class="help-block text-danger">Tenure field is required</div>
+                        </div>
+                        <div class="form-group" >
+                            <label for="amount" class="required semibold form-label">Amount</label>
+                            <input type="number" class="form-control" name="amount" [(ngModel)]="extension.amount" #amount="ngModel" required>
+                            <div *ngIf="f.submitted && !amount.valid" class="help-block text-danger">Amount field is required</div>
+                         </div>
+               
+                         <div class="form-group">
+                            <div class="checkbox-toggle">
+                                <label for="active" class="semibold form-label">Active</label>
+                                <input type="checkbox" id="check-toggle-active" name="active" [(ngModel)]="extension.status">
+                                <label for="check-toggle-active"></label>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                          <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+                          <a class="btn btn-primary" [routerLink]="['/extension_deal']">Cancel</a>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

@@ -1,0 +1,41 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Settings</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Settings</li>
+        </ol> 
+      </div>
+    </div>
+  </div>
+</header>
+<section class="box-typical box-typical-padding min-ht">
+<div class="row">
+  <div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label>
+            <h4>Aadhar Verification Button (OFF/ON)</h4>
+             <h4>PAN Verification Button (OFF/ON)</h4>
+          </label>
+        </div>
+        <div class="col-md-4">
+          <div class="checkbox-toggle">
+            <input  type="checkbox" id="check-toggle-12" [(ngModel)]="settings.aadar_verification" (change)="changeAadarVerificationBtn()">
+            <label for="check-toggle-12"></label>
+          </div>
+          <div class="checkbox-toggle pt-3">
+            <input  type="checkbox" id="check-toggle-13" [(ngModel)]="settings.pan_verification" (change)="changePanVerificationBtn()">
+            <label for="check-toggle-13"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</section>

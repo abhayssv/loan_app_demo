@@ -1,0 +1,48 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>App User Limit</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/app_user_limit']">App User Limits</a></li>
+          <li class="active">App User Limit</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content -->
+<section class="box-typical box-typical-padding"> 
+  <div class="row m-y-1">
+    <div class="col-lg-3">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">User Type </label>
+        <span *ngIf="limit.user_type === 0" class="form-control maxlength-simple">Student</span>
+        <span *ngIf="limit.user_type === 1" class="form-control maxlength-simple">Employee</span>
+        <span *ngIf="limit.user_type === 2" class="form-control maxlength-simple">Self Employee</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-3">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Level </label>
+        <span *ngIf="limit.level === 0" class="form-control maxlength-simple">Silver</span>
+        <span *ngIf="limit.level === 1" class="form-control maxlength-simple">Gold</span>
+        <span *ngIf="limit.level === 2" class="form-control maxlength-simple">Diamond</span>
+        <span *ngIf="limit.level === 3" class="form-control maxlength-simple">Platinum</span>
+      </fieldset>
+    </div> 
+    <div class="col-lg-3">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Initial Limit </label>
+        <span class="form-control maxlength-simple">{{ limit.initial_limit }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-3">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Final Limit </label>
+        <span class="form-control maxlength-simple">{{ limit.final_limit }}</span>
+      </fieldset>
+    </div> 
+  </div>    
+</section>
+<!-- /.content -->

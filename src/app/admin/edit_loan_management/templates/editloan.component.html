@@ -1,0 +1,107 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Edit Loan</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['/edit_loan']">Loan</a></li>
+          <li class="active">Edit Loan</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content --> 
+<section class="box-typical box-typical-padding">
+  <form name="form" (ngSubmit)="f.form.valid && save(f.value)" #f="ngForm" novalidate> 
+    <div class="row m-t-1">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-md-6"> 
+            <label for="loan_id" class="required semibold form-label">Loan Id</label>
+            <input type="text" class="form-control" name="loan_id" disabled [(ngModel)]="editloan.loan_id" #loan_id="ngModel"> 
+            <input type="hidden" class="form-control" name="loans_id" [(ngModel)]="editloan.loan_id" #loans_id="ngModel"> 
+            <input type="hidden" class="form-control" name="user_id" [(ngModel)]="editloan.user_id" #user_id="ngModel"> 
+          </div> 
+          <div class="col-md-6">
+              <div class="form-group">
+                  <label for="name" class="required semibold form-label">Username</label>
+                  <input type="text" class="form-control" name="name" disabled [(ngModel)]="editloan.appUser.username" #name="ngModel"> 
+              </div>
+          </div>
+        </div> 
+        <div class="row">
+          <div class="col-md-6">
+            <label for="mobile_no" class="required semibold form-label">Mobile Number</label>
+            <input type="text" class="form-control" name="mobile_no" disabled [(ngModel)]="editloan.appUser.mobile_no" #mobile_no="ngModel"> 
+          </div> 
+          <div class="col-md-6">
+              <div class="form-group">
+                  <label for="email" class="required semibold form-label">Email</label>
+                  <input type="text" class="form-control" name="email" disabled [(ngModel)]="editloan.appUser.email" #email="ngModel"> 
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="required_amount" class="required semibold form-label">Loan Amount</label>
+            <input type="text" class="form-control" name="required_amount" disabled [(ngModel)]="editloan.required_amount" #required_amount="ngModel"> 
+          </div> 
+          <div class="col-md-6">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !disbursed_amount.valid}">
+                  <label for="disbursed_amount" class="required semibold form-label">Disbursed Amount</label>
+                  <input type="text" class="form-control" name="disbursed_amount" [(ngModel)]="editloan.disbursed_amount" #disbursed_amount="ngModel" required> 
+                  <div *ngIf="f.submitted && !disbursed_amount.valid" class="help-block">Disbursed Amount field is required</div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="days" class="required semibold form-label">Days</label>
+            <input type="text" class="form-control" name="days" disabled [(ngModel)]="editloan.days" #days="ngModel"> 
+          </div> 
+          <div class="col-md-6">
+            <div class="form-group">
+                <label for="apply_date" class="required semibold form-label">Apply Date</label>
+                <input type="text" class="form-control" name="apply_date" disabled [(ngModel)]="editloan.apply_date" #apply_date="ngModel"> 
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="status" class="required semibold form-label">Status</label> 
+            <select class="form-control" name="status" [(ngModel)]="editloan.status" #status="ngModel" required>
+              <option disabled>select-status</option>
+              <option *ngFor="let stat_us of loanStatus" [value]="stat_us.status_id">{{stat_us.status}}</option>
+            </select>
+          </div> 
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="disbursed_date" class="required semibold form-label">Disbursed Date</label>
+              <input type="datetime-local" class="form-control" name="disbursed_date" [(ngModel)]="editloan.disbursed_date" #disbursed_date="ngModel"> 
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="payable_date" class="required semibold form-label">Payable Date</label>
+            <input type="datetime-local" class="form-control" name="payable_date" [(ngModel)]="editloan.payable_date" #payable_date="ngModel"> 
+          </div> 
+          <div class="col-md-6">
+              <div class="form-group">
+                  <label for="transfer_id" class="required semibold form-label">Transfer ID</label>
+                  <input type="text" class="form-control" name="transfer_id" [(ngModel)]="editloan.transfer_id" #transfer_id="ngModel"> 
+              </div>
+          </div>
+        </div>
+        <div class="col-md-12 align-middle">
+          <div class="form-group">
+            <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+            <a class="btn btn-primary" [routerLink]="['/edit_loan']">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

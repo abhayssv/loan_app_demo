@@ -1,0 +1,47 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Page Details</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/pages']">Pages</a></li>
+          <li class="active">Page Details</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content -->
+<section class="box-typical box-typical-padding"> 
+  <div class="row m-y-1">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Title </label>
+        <span class="form-control maxlength-simple">{{ page.title }}</span>
+      </fieldset>
+    </div>
+  <!-- </div>
+  <div class="row m-y-1"> -->
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Slug </label>
+        <span class="form-control maxlength-simple">{{ page.slug }}</span>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row m-y-1">
+    <div class="col-lg-12">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Description </label>
+        <angular-editor name="description" id="description" [(ngModel)]="page.description" [config]="editorConfig" aria-readonly="#id"></angular-editor>
+        <!-- <span class="form-control maxlength-simple">{{ page.description }}</span> -->
+      </fieldset>
+    </div> 
+  </div>
+  <script>
+    $(document).ready(function(){
+        $("#description").froalaEditor("edit.off");
+    });
+  </script>
+</section>
+<!-- /.content -->

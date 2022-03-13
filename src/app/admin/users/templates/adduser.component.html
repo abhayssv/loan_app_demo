@@ -1,0 +1,122 @@
+<header class="section-header">
+    <div class="tbl">
+        <div class="tbl-row">
+            <div class="tbl-cell">
+                <h3>Users</h3>
+                <ol class="breadcrumb breadcrumb-simple">
+                    <li><a [routerLink]="['/']">Home</a></li>
+                    <li><a [routerLink]="['/users']">Users</a></li>
+                    <li class="active">Add</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main content -->
+<section class="box-typical box-typical-padding">
+    <form name="form" (ngSubmit)="f.form.valid && save(f.value)" #f="ngForm" novalidate>
+        <div class="row m-t-3">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstname.valid}">
+                            <label for="firstname" class="required semibold form-label">FirstName</label>
+                            <input type="text" class="form-control" name="firstname" [(ngModel)]="user.firstname" #firstname="ngModel" required>
+                            <div *ngIf="f.submitted && !firstname.valid" class="help-block">FirstName is required</div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastname.valid}">
+                            <label for="lastname" class="required semibold form-label">LastName</label>
+                            <input type="text" class="form-control" name="lastname" [(ngModel)]="user.lastname" #lastname="ngModel" required>
+                            <div *ngIf="f.submitted && !lastname.valid" class="help-block">LastName is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid}">
+                            <label for="email" class="required semibold form-label">Email</label>
+                            <input type="text" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required>
+                            <div *ngIf="f.submitted && !email.valid" class="help-block">Email is required</div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{'has-error': f.submitted && !password.valid}">
+                            <label for="password" class="required semibold form-label">Password</label>
+                            <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required>
+                            <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{'has-error': f.submitted && !profile_image.valid}">
+                            <label for="profile_image" class="required semibold form-label">Profile Image</label>
+                            <input type="file" class="form-control" name="profile_image" [(ngModel)]="user.profile_image" #profile_image="ngModel" (change)="selectImage($event)" required>
+                            <div *ngIf="f.submitted && !profile_image.valid" class="help-block">Upload an Image</div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{'has-error': f.submitted && !mobile_no.valid}">
+                            <label for="mobile_no" class="required semibold form-label">Mobile</label>
+                            <input type="text" class="form-control" name="mobile_no" [(ngModel)]="user.mobile_no" #mobile_no="ngModel" required>
+                            <div *ngIf="f.submitted && !mobile_no.valid" class="help-block">Please Enter a Mobile Number</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="checkbox-toggle">
+                                <label for="is_admin" class="semibold form-label">Is admin</label>
+                                <input type="checkbox" id="check-toggle-admin" name="is_admin" [(ngModel)]="user.is_admin">
+                                <label for="check-toggle-admin"></label>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="checkbox-toggle">
+                                <label for="active" class="semibold form-label">Active</label>
+                                <input type="checkbox" id="check-toggle-active" name="active" [(ngModel)]="user.active">
+                                <label for="check-toggle-active"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{'has-error': f.submitted && !user_type.valid}"> 
+                            <label for="active" class="required semibold form-label">Category</label>
+                            <select class="form-control" name="user_type" [(ngModel)]="user.user_type" #user_type="ngModel" required (change)="onChangeCategory($event.target.value)">
+                                <option disabled [ngValue]="null">Select-Category</option>
+                                <option *ngFor="let user_category of userCategory" [ngValue]="user_category.user_type">{{user_category.category}}</option>
+                            </select>
+                            <div *ngIf="f.submitted && !user_type.valid" class="help-block">Please select a category</div> 
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="checkbox-toggle" [ngClass]="{'has-error': f.submitted && !has_role.valid}">
+                                <label for="active" class="required semibold form-label">Sub category</label>
+                                <select class="form-control" name="has_role" [(ngModel)]="user.has_role" #has_role="ngModel" required>
+                                    <option disabled [ngValue]="null">Select-Subcategory</option>
+                                    <option *ngFor="let user_sub_category of userSubCategory" [ngValue]="user_sub_category.id">{{user_sub_category.name}}</option>
+                                </select>
+                                <div *ngIf="f.submitted && !has_role.valid" class="help-block">Please select a sub category</div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 align-middle">
+                <div class="form-group">
+                    <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+                    <a class="btn btn-primary" [routerLink]="['/users']">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

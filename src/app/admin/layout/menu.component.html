@@ -1,0 +1,270 @@
+<div class="mobile-menu-left-overlay"></div>
+<nav class="side-menu">
+  <ul class="side-menu-list">
+    <li class="grey" *ngIf="dataArray.includes('manage-dashboard')">
+      <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['']">
+        <span>
+          <i class="font-icon font-icon-dashboard"></i>
+          <span class="lbl">Dashboard</span>
+        </span>
+      </a>
+    </li>
+    <li class="grey with-sub" id="user_management" (click)="openSubMenu($event.currentTarget)" *ngIf="dataArray.includes('user-management')">
+      <span>
+        <i class="font-icon font-icon-users"></i>
+        <span class="lbl">User Management</span>
+      </span>
+      <ul>
+        <li><a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" 
+          [routerLink]="['/users']"><span class="lbl">Users</span></a></li>
+        <li><a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
+            [routerLink]="['/category']"><span class="lbl">Category</span></a></li>
+        <li><a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
+            [routerLink]="['/sub_category']"><span class="lbl">Sub Category</span></a></li>
+        <li><a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
+            [routerLink]="['/permissions']"><span class="lbl">Permissions</span></a></li> 
+      </ul>
+    </li>
+    <li class="grey with-sub" id="application_management" (click)="openSubMenu($event.currentTarget)" *ngIf="dataArray.includes('application-management')"> 
+      <span>
+        <i class="font-icon font-icon-view-grid"></i>
+        <span class="lbl">Application management</span>
+      </span>
+      <ul>
+        <li><a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" 
+          [routerLink]="['/customer_details']"><span class="lbl">Customer Details</span></a></li>  
+      </ul> 
+      <ul>
+        <li><a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" 
+          [routerLink]="['/assign_loan']"><span class="lbl">Assign Loan</span></a></li>  
+      </ul> 
+    </li> 
+    <li class="grey with-sub" id="case_management" (click)="openSubMenu($event.currentTarget)" *ngIf="dataArray.includes('case-management')">
+        <span>
+          <i class="font-icon font-icon-case"></i>
+          <span class="lbl">Case management</span>
+        </span>
+        <ul>
+          <li *ngIf="dataArray.includes('first-review')">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/first_review']">
+              <span class="lbl">First Review</span>
+            </a>
+          </li>  
+          <li *ngIf="dataArray.includes('second-review')">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/second_review']">
+              <span class="lbl">Second Review</span>
+            </a>
+          </li>
+          <li *ngIf="dataArray.includes('case-review')">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/case_review']">
+              <span class="lbl">Case Review</span>
+            </a>
+          </li>
+          <li *ngIf="dataArray.includes('overall-customer-loan')">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/overall_customer_loan']">
+              <span class="lbl">Overall Customer Applied</span>
+            </a>
+          </li>
+          <li *ngIf="dataArray.includes('approval-report')">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/approval_report']">
+              <span class="lbl">Approval Report</span>
+            </a>
+          </li>
+        </ul>
+    </li>
+    <li class="grey with-sub" id="financial_management" (click)="openSubMenu($event.currentTarget)" *ngIf="dataArray.includes('financial-management')">
+        <span>
+          <i class="font-icon font-icon-wallet"></i>
+          <span class="lbl">Financial management</span>
+        </span>
+        <ul>
+          <li *ngIf="dataArray.includes('cash-flatting')">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/cash_flatting']">
+              <span class="lbl">Cash Flatting/Offline</span> 
+            </a>
+          </li>  
+          <li *ngIf="dataArray.includes('repayment-details')">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/repayment_details']">
+              <span class="lbl">Repayment details</span>
+            </a>
+          </li> 
+        </ul>
+    </li>
+    <li class="grey with-sub" id="collection_management" (click)="openSubMenu($event.currentTarget)" *ngIf="dataArray.includes('collection-management')">
+        <span>
+          <i class="font-icon font-icon-editor-list"></i>
+          <span class="lbl">Collection management</span>
+        </span> 
+        <ul>
+          <li *ngIf="dataArray.includes('overall-collection-customer')">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/overall_collection_customer']">
+              <span class="lbl">Overall Collection Customer</span> 
+            </a>
+          </li>  
+          <!-- <li *ngIf="dataArray.includes('business-loan')">
+            <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/']">
+              <span class="lbl">Business Loan</span>
+            </a>
+          </li>  -->
+        </ul>
+    </li> 
+
+    <li class="grey with-sub" id="system_report" (click)="openSubMenu($event.currentTarget)" *ngIf="dataArray.includes('system-report')">
+      <span>
+        <i class="font-icon font-icon-editor-list"></i>
+        <span class="lbl">System Report</span>
+      </span> 
+      <ul>
+        <li *ngIf="dataArray.includes('reviewer-reports')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/reviewer_report']">
+            <span class="lbl">Reviewer Reports</span> 
+          </a>
+        </li>  
+        <li *ngIf="dataArray.includes('collection-reports')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/collection_report']">
+            <span class="lbl">Collection Reports</span>
+          </a>
+        </li> 
+      </ul>
+    </li> 
+    <li class="grey with-sub" id="achivement" (click)="openSubMenu($event.currentTarget)" *ngIf="dataArray.includes('achivement')">
+      <span>
+        <i class="font-icon font-icon-editor-list"></i>
+        <span class="lbl">Achievement</span>
+      </span> 
+      <ul>
+        <li *ngIf="dataArray.includes('approver-achivement')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/approver_achivement']">
+            <span class="lbl">Approver Achievement</span> 
+          </a>
+        </li>  
+        <li *ngIf="dataArray.includes('collection-achivement')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/collection_achivement']">
+            <span class="lbl">Collection Achievement</span>
+          </a>
+        </li> 
+      </ul>
+    </li> 
+    <li class="grey with-sub" id="operation_management" (click)="openSubMenu($event.currentTarget)" *ngIf="dataArray.includes('operation-management')">
+      <span>
+        <i class="font-icon font-icon-player-settings"></i>
+        <span class="lbl">Operation management</span>
+      </span>
+      <ul>
+        <li *ngIf="dataArray.includes('customer-management')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/app_users']">
+            <span class="lbl">Customer Management</span>
+          </a>
+        </li>
+        <li *ngIf="dataArray.includes('percentage-calculation')">
+          <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/persentage_calculation']">
+            <span class="lbl">Percentage Calculation</span>
+          </a>
+        </li> 
+        <li *ngIf="dataArray.includes('application-percentage')">
+          <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/app_user_limit']">
+            <span class="lbl">Application Percentage</span>
+          </a>
+        </li>
+        <li *ngIf="dataArray.includes('push-notification')">
+          <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/push_notification']">
+            <span class="lbl">Send Notification</span>
+          </a>
+        </li>
+        <li *ngIf="dataArray.includes('manage-pages')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/pages']">
+            <span class="lbl">Pages</span>
+          </a>
+        </li>
+        <li *ngIf="dataArray.includes('manage-faq')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/faqs']">
+           <span class="lbl">FAQ</span>
+          </a>
+        </li>   
+        <li *ngIf="dataArray.includes('manage-app-user-list')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/app_user_list']">
+           <span class="lbl">App User List</span>
+          </a>
+        </li>  
+        <li *ngIf="dataArray.includes('days-management')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/days_management']">
+           <span class="lbl">Days Management</span>
+          </a>
+        </li>
+         <li *ngIf="dataArray.includes('extension-deal')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/extension_deal']">
+            <span class="lbl">Extension Deal </span>
+          </a>
+        </li>
+        <li *ngIf="dataArray.includes('location-restriction')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/location_restriction']">
+           <span class="lbl">Location Restriction</span>
+          </a>
+        </li>
+        <li *ngIf="dataArray.includes('email-setting')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/email_setting']">
+            <span class="lbl">App Email Settings </span>
+          </a>
+        </li>
+        <li *ngIf="dataArray.includes('loan-edit-module')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/edit_loan']">
+            <span class="lbl">Loan Edit Management </span>
+          </a>
+        </li>
+        <li *ngIf="dataArray.includes('collection-team-management')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/collection_team_management']">
+            <span class="lbl">Collection Team Management </span>
+          </a>
+        </li>
+         <li *ngIf="dataArray.includes('settings')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/settings']">
+            <span class="lbl">Settings </span>
+          </a>
+        </li> 
+      </ul> 
+      </li>
+    <!-- <li class="grey with-sub" id="business_management" (click)="openSubMenu($event.currentTarget)" *ngIf="dataArray.includes('business-percentage-calculation')"> 
+      <span>
+        <i class="font-icon font-icon-view-grid"></i>
+        <span class="lbl">Business management</span>
+      </span>
+      <li *ngIf="dataArray.includes('business-percentage-calculation')">
+        <a [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/business_persentage_calculation']">
+          <span class="lbl">Business Percentage Calculation</span>
+        </a>
+      </li>
+    </li>  -->
+    
+    <li class="grey with-sub" id="business_percentage_calculation" (click)="openSubMenu($event.currentTarget)" *ngIf="dataArray.includes('business-module')">
+      <span>
+        <i class="font-icon font-icon-editor-list"></i>
+        <span class="lbl">Business Management</span>
+      </span> 
+      <ul>
+        <li *ngIf="dataArray.includes('business-cash-flatting')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" 
+          [routerLink]="['/business_cash_flatting']">
+            <span class="lbl">Cash Flatting/Offline</span> 
+          </a>
+        </li> 
+         <li *ngIf="dataArray.includes('overall-business-collection-customer')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" 
+          [routerLink]="['/overall_business_collection_customer']">
+            <span class="lbl">Collection Management</span> 
+          </a>
+        </li> 
+        <li *ngIf="dataArray.includes('business-percentage-calculation')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/business_persentage_calculation']">
+            <span class="lbl">Business Percentage Calculation</span> 
+          </a>
+        </li> 
+        <li *ngIf="dataArray.includes('business-percentage-calculation')">
+          <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/business_repayment_details']">
+            <span class="lbl">Business Repayment Details</span> 
+          </a>
+        </li>   
+      </ul>
+    </li>
+  </ul>
+</nav>
+<!--.side-menu-->

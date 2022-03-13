@@ -1,0 +1,65 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Business Percentage Calculation</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Business Percentage Calculation</li>
+        </ol>
+        <div class="add-button pull-right">
+          <a [routerLink]="['/business_persentage_calculation/add/']" class="btn btn-inline btn-primary btn-sm" title="Add">Add Business Interest</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <table id="lisbusinessinterests" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Days</th>
+        <th>Processing Fee</th>
+        <th>Interest</th>
+        <th>GST</th>
+        <th>Penality</th> 
+        <th>Action</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let interest of businessinterests" [attr.id]="interest.id"> 
+        <td>
+          {{ interest.id }}
+        </td>
+        <td>
+          {{ interest.days  === 1 ? 'Daily' : interest.days }}
+        </td>
+        <td>
+          {{ interest.processing_fee * 100 | number: '1.0-0'}}
+        </td>
+        <td>
+          {{ interest.interest * 100 | number: '1.0-0'}}
+        </td>
+        <td>
+          {{ interest.gst * 100 | number: '1.0-0' }}
+        </td>
+        <td>
+          {{ interest.penality}}
+        </td>  
+        <td class="text-center">
+          <!-- <a [routerLink]="['/persentage_calculation/view/' + interest.id]" class="btn btn-inline btn-primary btn-sm" title="View Interest"><i class="fa fa-search"></i></a>  -->
+          
+          <a [routerLink]="['/business_persentage_calculation/edit/' + interest.id]" class="btn btn-inline btn-primary btn-sm" title="Edit Interest"><i class="fa fa-pencil"></i></a>
+           
+          <!-- <span class="btn btn-inline btn-danger btn-sm" title="Delete User" (click)="delete1(interest.id)"><i class="fa fa-trash"></i></span> -->
+            
+        </td>
+        <!-- <td style="width:50%">
+          {{ interest.description }}
+        </td>   -->
+      </tr>
+    </tbody>
+  </table>
+</section>

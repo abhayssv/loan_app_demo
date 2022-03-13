@@ -1,0 +1,18 @@
+<div class="modal-header modal-copy-header">
+   <h5 class="headerTitle m_header">Reminder</h5>
+   <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+<div class="m-3">
+  <div *ngFor="let each of currentReminder" class="card">
+  <div class="card-body">
+  <div><b>Loan Id: {{each.loan_id}}</b></div>
+  <div><b>{{each.description}}</b></div>
+  <div class="d-flex justify-content-start">
+  <button type="button" class="btn btn-primary mr-2 btn-sm" (click)="remindMeLater.emit(each.id)">Remind me Later</button>
+  <button type="button" class="btn btn-success btn-sm" (click)="done.emit(each.id)">Done</button>
+  </div>
+  </div>
+</div>
+</div>

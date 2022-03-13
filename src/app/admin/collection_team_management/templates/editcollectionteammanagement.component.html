@@ -1,0 +1,54 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Edit Collection Team Management</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['/collection_team_management']">Collection Team Management</a></li>
+          <li class="active">Edit Collection Team Management</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content --> 
+<section class="box-typical box-typical-padding">
+  <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" enctype="multipart/form-data" novalidate>
+    <input type="hidden" name="id" [(ngModel)]="collectionteammanagement.id" #id="ngModel">
+    <div class="row m-t-1">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="role_id" class="required semibold form-label">Role</label>
+              <input type="text" class="form-control" name="role_id" disabled [(ngModel)]="user_role" #role_id="ngModel"> 
+            </div> 
+          </div>
+          <div class="col-md-4">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !min_days.valid}">
+              <label for="min_days" class="required semibold form-label">Min Days</label>
+              <input type="number" class="form-control" name="min_days" [(ngModel)]="collectionteammanagement.min_days" #min_days="ngModel"
+                required>
+              <div *ngIf="f.submitted && !min_days.valid" class="help-block">Min days field is required</div>
+            </div>  
+          </div>
+          <div class="col-md-4">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !max_days.valid}">
+              <label for="max_days" class="required semibold form-label">Max Days</label>
+              <input type="number" class="form-control" name="max_days" [(ngModel)]="collectionteammanagement.max_days" #max_days="ngModel"
+                required>
+              <div *ngIf="f.submitted && !max_days.valid" class="help-block">Max days field is required</div>
+            </div>  
+          </div>
+        </div>  
+        <div class="col-md-12 align-middle">
+          <div class="form-group">
+            <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+            <a class="btn btn-primary" [routerLink]="['/collection_team_management']">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

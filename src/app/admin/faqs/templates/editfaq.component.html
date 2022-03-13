@@ -1,0 +1,50 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Edit Faq</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['//faqs']">Faqs</a></li>
+          <li class="active">Edit Faq</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content -->
+<p>{{faq.question}}</p>
+<section class="box-typical box-typical-padding">
+  <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" enctype="multipart/form-data" novalidate>
+    <input type="hidden" name="faq_id" [(ngModel)]="faq.faq_id" #id="ngModel">
+    <div class="row m-t-1">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !question.valid}">
+              <label for="question" class="required semibold form-label">Question</label>
+              <input type="text" class="form-control" name="question" [(ngModel)]="faq.question" #question="ngModel"
+                required>
+              <div *ngIf="f.submitted && !question.valid" class="help-block">Question field is required</div>
+            </div>
+          </div>  
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !answer.valid}">
+              <label for="answer" class="required semibold form-label">Answer</label>  
+                <textarea class="form-control" placeholder="Answer..." name="answer" [(ngModel)]="faq.answer" #answer="ngModel" required rows="4" cols="50"></textarea>
+              <div *ngIf="f.submitted && !answer.valid" class="help-block">Answer is required</div>
+            </div>
+          </div>
+        </div> 
+        <div class="col-md-12 align-middle">
+          <div class="form-group">
+            <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+            <a class="btn btn-primary" [routerLink]="['/faqs']">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

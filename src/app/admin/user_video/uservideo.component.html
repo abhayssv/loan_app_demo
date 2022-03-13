@@ -1,0 +1,6 @@
+<h5>User Video</h5>
+<div *ngFor="let each of videoSrcs">
+	<video width="320" height="240" controls>
+	  <source [src]="each.selfie_video[0]" type="video/mp4">
+  </video>
+</div>

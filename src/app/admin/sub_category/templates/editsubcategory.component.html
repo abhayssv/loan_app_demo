@@ -1,0 +1,62 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Edit Sub Category</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['/sub_category']">Sub Category</a></li>
+          <li class="active">Edit Sub Category</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content --> 
+<section class="box-typical box-typical-padding">
+  <form name="form" (ngSubmit)="f.form.valid && save(f.value)" #f="ngForm" enctype="multipart/form-data" novalidate> 
+    <div class="row m-t-1">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-md-6" *ngIf="sub_cate_gory">
+              <input type="hidden" name="id" [(ngModel)]="sub_cate_gory.id" #id="ngModel"> 
+              <div class="form-group" [ngClass]="{'has-error': f.submitted && !user_type.valid}">  
+                  <label for="active" class="required semibold form-label">Category</label>
+                  <select class="form-control" disabled name="user_type" [(ngModel)]="sub_cate_gory.user_type" #user_type="ngModel" required>
+                      <option disabled [ngValue]="null">Select-Category</option>
+                      <option  *ngFor="let user_category of userCategory" [ngValue]="user_category.user_type">{{user_category.category}}</option>
+                  </select>
+                  <div *ngIf="f.submitted && !user_type.valid" class="help-block">Please select a category</div> 
+              </div>
+          </div> 
+          <div class="col-md-6" *ngIf="sub_cate_gory">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid}">
+                  <label for="name" class="required semibold form-label">Sub Category</label>
+                  <input type="text" class="form-control" name="name" disabled [(ngModel)]="sub_cate_gory.name" #name="ngModel" required>
+                  <div *ngIf="f.submitted && !name.valid" class="help-block">Sub category field is required</div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+              <div class="form-group">
+                <label class="semibold form-label">Permission</label>
+                <div *ngFor="let permission of per_missions"> 
+                  <label>
+                    <input type="checkbox" [checked]="selectedId.indexOf(permission.id) != -1" [value]="permission.id" (change)="onChange($event, permission.id )"/>
+                    {{permission.per_name}}
+                  </label> 
+                </div> 
+              </div>
+          </div>  
+        </div> 
+        <div class="col-md-12 align-middle">
+          <div class="form-group">
+            <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+            <a class="btn btn-primary" [routerLink]="['/sub_category']">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

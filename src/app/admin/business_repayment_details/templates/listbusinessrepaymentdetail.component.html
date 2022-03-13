@@ -1,0 +1,221 @@
+<style>
+  
+</style>
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Business Repayment Details</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Business Repayment Details</li>
+        </ol> 
+      </div>
+      <div class="tbl-cell ref-btn">
+        <button class="btn btn-primary" (click)="refresh()"><i class="fa fa-repeat"></i> Refresh</button> 
+      </div>
+    </div>
+  </div>
+</header>
+<section class="box-typical box-typical-padding">
+  <h5>Search & Filter</h5>
+  <form name="form" (ngSubmit)="search(f.value)" #f="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="from_date">From Date</label>
+        <input type="date" class="form-control" name="from_date" [(ngModel)]="searchbusinessrepaymentdetail.from_date" #from_date="ngModel">
+      </div>  
+      <div class="col-md-3">
+        <label for="to_date">To Date</label>
+        <input type="date" class="form-control" name="to_date" [(ngModel)]="searchbusinessrepaymentdetail.to_date" #to_date="ngModel">
+      </div>  
+      <div class="col-md-3">
+        <label for="loan_id">Loan Id</label>
+        <input type="number" class="form-control" #loanId name="loan_id" [(ngModel)]="searchbusinessrepaymentdetail.loan_id" #loan_id="ngModel">
+      </div>  
+      <div class="col-md-3">
+        <label for="mobile_no">Mobile Number</label>
+        <input type="number" class="form-control" name="mobile_no" [(ngModel)]="searchbusinessrepaymentdetail.mobile_no" #mobile_no="ngModel">
+      </div>  
+    </div><br>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" name="email" [(ngModel)]="searchbusinessrepaymentdetail.email" #email="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="searchbusinessrepaymentdetail.name" #name="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="id_number">Adhaar Number</label>
+        <input type="number" class="form-control" name="id_number" [(ngModel)]="searchbusinessrepaymentdetail.id_number" #id_number="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="status">Status</label>
+        <select class="form-control" name="status" [(ngModel)]="searchbusinessrepaymentdetail.status" #status="ngModel">
+          <option disabled>select-status</option>
+          <option *ngFor="let s of statuss" [value]="s.status">{{s.status}}</option>
+        </select>
+      </div>  
+    </div><br>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="payment_method">Payment Method</label>
+        <input type="text" class="form-control" name="payment_method" [(ngModel)]="searchbusinessrepaymentdetail.payment_method" #payment_method="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="trans_id">Transaction Id</label>
+        <input type="text" class="form-control" name="trans_id" [(ngModel)]="searchbusinessrepaymentdetail.trans_id" #trans_id="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="order_id">Order ID</label>
+        <input type="text" class="form-control" name="order_id" [(ngModel)]="searchbusinessrepaymentdetail.order_id" #order_id="ngModel">
+      </div>  
+    </div>
+    <div class="row m-t-1">
+      <div class="col-md-2 search-button">
+        <button class="btn btn-primary" ><i class="fa fa-search"></i> Search</button>
+      </div>
+      <div class="col-md-2 search-button">
+        <span (click)="reset()" class="btn btn-warning" title="Reset Filter">Reset Filter</span> 
+      </div>
+    </div>
+  </form>
+</section>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding" style="height: 650px;">
+  <table id="listbusinessrepaymentdetails" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr> 
+        <th>Loan Id</th>
+        <th>Name</th>
+        <th>Mobile No</th>
+        <th>Email</th> 
+        <th>Payable Amount</th>
+        <th>Paid Amount</th> 
+      </tr>
+    </thead>
+    <tbody [style.height]="isLoading? '500px':''" [class]="isLoading ? 'vizzve-loading': ''" >
+      <ng-container *ngFor="let repaymentdetail of businessrepaymentdetails | paginate: { itemsPerPage: limit, currentPage: p, totalItems: total } let i= index;">
+      <tr [attr.id]="repaymentdetail.id"> 
+        <td>
+          <div class="d-flex align-items-center">
+            <i class="fa fa-eye pointer" title="View All Loan"  aria-hidden="true" (click)="listPop(lpopup,repaymentdetail.loan_id)"></i> 
+            
+            <i class="fa fa-plus-circle m-2 pointer"
+               title="More Info" 
+               (click)="view_by_id=i">
+                
+            </i>
+            <a [routerLink]="['/business_repayment_details/view/' + repaymentdetail.loan_id + '/' + repaymentdetail.appApplyLoan.user_id]" target="_blank" title="View Customer Detail"> {{ repaymentdetail.loan_id }}</a>
+          </div> 
+        </td>
+        <td>
+          {{ repaymentdetail.appUser.username }}
+        </td>
+        <td>
+          {{ repaymentdetail.appUser.mobile_no }}
+        </td>
+        <td>
+          {{ repaymentdetail.appUser.email }}
+        </td>
+        <td>
+          {{ repaymentdetail.appApplyLoan.total_payable_amount }}
+        </td>
+        <td>
+          {{ repaymentdetail.order_amount }}
+        </td>
+      </tr>
+      <tr *ngIf="i === view_by_id">
+        <td colspan="6" class="bg-dark text-light">
+         <b>More Info of Loan Id {{repaymentdetail.loan_id}}</b>
+         <b class="float-right pointer" (click)="view_by_id=''">X</b>
+        </td> 
+      </tr>
+      <tr *ngIf="i === view_by_id">
+        <td colspan="6" class="bg-light">
+         <b> Date & Time :</b> {{ repaymentdetail.tx_time | date:'medium' }}
+        </td> 
+      </tr>
+      <tr *ngIf="i === view_by_id"> 
+        <td colspan="6" class="bg-light">
+         <b> Payment Mode :</b>{{ repaymentdetail.payment_mode }}
+        </td> 
+      </tr>
+      <tr *ngIf="i === view_by_id">
+        <td colspan="6" class="bg-light">
+        <b> Status:</b> {{ repaymentdetail.tx_status }}
+        </td> 
+      </tr>
+      <tr *ngIf="i === view_by_id && repaymentdetail.tx_status == 'FAILED'">
+        <td colspan="6" class="text-center" class="bg-light"> 
+         <b>Repayment Link:</b> <button class="btn btn-inline btn-primary btn-sm" (click)="createRepaymentLink(repaymentdetail.order_id)"><i class="fa fa-link"></i></button> 
+        </td> 
+      </tr>
+       <tr *ngIf="i === view_by_id">
+        <td colspan="6" class="bg-light">
+          <b>Repayment Link</b>: -
+        </td>
+      </tr>
+      </ng-container>
+      <tr *ngIf="!businessrepaymentdetails.length">
+          <td colspan="12" class="text-center">No records.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div  *ngIf="businessrepaymentdetails.length" 
+      class="pagination pagination-sm m-0 float-right pt-2 {{isLoading ? 'is-disabled': ''}}">
+    <pagination-controls (pageChange)="getPage($event)">
+    </pagination-controls>
+  </div>
+</section>
+<!-- Flat modal Popup -->
+<ng-template #lpopup let-modal>
+  <div class="modal-header modal-copy-header">
+     <h5 class="headerTitle m_header">Cash Flatting</h5>
+     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+     </button>
+  </div>
+  <div class="modal-body">
+     <div class="config-popup" style="height:300px;overflow: auto;">
+      <table id="listbusinessrepaymentdetails" class="display table table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr> 
+            <th>Loan Id</th> 
+            <th>Payable Amount</th>
+            <th>Paid Amount</th> 
+            <th>Date & Time</th> 
+            <th>Payment Mode</th> 
+            <th>Status</th>   
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let repaymentdetail of businessDetailsByLoanId" [attr.id]="repaymentdetail.id"> 
+            <td>
+              {{ repaymentdetail.loan_id }} 
+            </td> 
+            <td>
+              {{ repaymentdetail.appApplyLoan.remaining_amount }}
+            </td>
+            <td>
+              {{ repaymentdetail.order_amount }}
+            </td>
+            <td>
+              {{ repaymentdetail.tx_time | date:'medium' }}
+            </td>  
+            <td>
+              {{ repaymentdetail.payment_mode }}
+            </td> 
+            <td>
+              {{ repaymentdetail.tx_status }}
+            </td>  
+          </tr>
+        </tbody>
+      </table>
+     <div>  
+  </div>  
+ </div>
+</div>
+</ng-template>

@@ -1,0 +1,70 @@
+<header class="section-header">
+    <div class="tbl">
+        <div class="tbl-row">
+            <div class="tbl-cell">
+                <h3>Add Percentage Calculation</h3>
+                <ol class="breadcrumb breadcrumb-simple">
+                    <li><a [routerLink]="['/']">Home</a></li>
+                    <li><a [routerLink]="['/persentage_calculation']">Percentage Calculation</a></li>
+                    <li class="active">Add Percentage Calculation</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main content -->
+<section class="box-typical box-typical-padding">
+    <form name="form" (ngSubmit)="f.form.valid && save(f.value)" #f="ngForm" novalidate>
+        <div class="row m-t-1">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !days.valid}">
+                            <label for="days" class="required semibold form-label">Days</label>
+                            <input type="number" class="form-control" name="days" [(ngModel)]="interest.days" #days="ngModel" required>
+                            <div *ngIf="f.submitted && !days.valid" class="help-block">Days field is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !processing_fee.valid}">
+                            <label for="processing_fee" class="required semibold form-label">Processing Fee</label>
+                            <input type="number" class="form-control" name="processing_fee" [(ngModel)]="interest.processing_fee" #processing_fee="ngModel" required>
+                            <div *ngIf="f.submitted && !processing_fee.valid" class="help-block">Processing Fee field is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !interest.valid}">
+                            <label for="interest" class="required semibold form-label">Interest</label>
+                            <input type="number" class="form-control" name="interest" [(ngModel)]="interest.interest" #interest="ngModel" required>
+                            <div *ngIf="f.submitted && !interest.valid" class="help-block">Interest field is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !gst.valid}">
+                            <label for="gst" class="required semibold form-label">GST</label>
+                            <input type="number" class="form-control" name="gst" [(ngModel)]="interest.gst" #gst="ngModel" required>
+                            <div *ngIf="f.submitted && !gst.valid" class="help-block">GST field is required</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !penality.valid}">
+                            <label for="penality" class="required semibold form-label">Penality</label>
+                            <input type="number" class="form-control" name="penality" [(ngModel)]="interest.penality" #penality="ngModel" required>
+                            <div *ngIf="f.submitted && !penality.valid" class="help-block">Penality field is required</div>
+                        </div>
+                    </div> 
+                </div>  -->
+            </div> 
+            <div class="col-md-12 align-middle">
+                <div class="form-group">
+                    <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+                    <a class="btn btn-primary" [routerLink]="['/persentage_calculation']">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

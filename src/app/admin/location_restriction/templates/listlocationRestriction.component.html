@@ -1,0 +1,101 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Location Restriction</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Location Restriction</li>
+        </ol>
+        <div class="add-button pull-right">
+          <button class="btn btn-primary plus-popup mt-2 m_popup" (click)="flatPop(fpopup,data)">Add Location Restriction</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <table id="lislimits" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>State</th>
+        <th>City</th> 
+        <th>Action</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let loc_restrict of locationrestrictions" [attr.id]="loc_restrict.id"> 
+        <td>
+          {{ loc_restrict.id }}
+        </td> 
+        <td>
+          {{ loc_restrict.state }}
+        </td>
+        <td *ngIf="loc_restrict.city">
+          {{ loc_restrict.city }}
+        </td>   
+        <td *ngIf="!loc_restrict.city">
+          Full Banned
+        </td>  
+        <td class="text-center">
+          <!-- <a [routerLink]="['/app_user_limit/view/' + limit.id]" class="btn btn-inline btn-primary btn-sm" title="View User Limit"><i class="fa fa-search"></i></a>  -->
+          
+          <!-- <a [routerLink]="['/app_user_limit/edit/' + limit.id]" class="btn btn-inline btn-primary btn-sm" title="Edit User Limit"><i class="fa fa-pencil"></i></a> -->
+           
+          <span class="btn btn-inline btn-danger btn-sm" title="Delete User Limit" (click)="delete1(loc_restrict.id)"><i class="fa fa-trash"></i></span>
+            
+        </td> 
+      </tr>
+    </tbody>
+  </table>
+</section>
+<!-- Flat modal Popup -->
+<ng-template #fpopup let-modal>
+  <div class="modal-header modal-copy-header">
+     <h5 class="headerTitle m_header">Add Location Restriction</h5>
+     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+     </button>
+  </div>
+  <div class="modal-body">
+     <div class="config-popup">
+       <form name="form" (ngSubmit)="f.form.valid && saveLocRestriction(f.value)" #f="ngForm" novalidate>
+         <div class="col-sm-12">
+           <div class="row">
+              <div class="col-md-12">  
+                <fieldset class="form-group">
+                  <label class="semibold form-label" for="email">Country </label>
+                  <span class="form-control maxlength-simple">India</span>
+                </fieldset> 
+                <div class="form-group" [ngClass]="{'has-error': f.submitted && !state.valid}"> 
+                  <label for="active" class="required semibold form-label">State</label>
+                  <select class="form-control" name="state" [(ngModel)]="loc_restriction.state" #state="ngModel" required (change)="onChangeCity($event.target.value)">
+                      <option disabled [ngValue]="null">Select-State</option>
+                      <option *ngFor="let stateList of stateLists" [ngValue]="stateList.state_name +':'+ stateList.state_id">{{stateList.state_name}}</option>
+                  </select>
+                  <div *ngIf="f.submitted && !state.valid" class="help-block">Please select a State</div> 
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': f.submitted && !city.valid}"> 
+                  <label for="active" class="required semibold form-label">City</label>
+                  <select class="form-control" name="city" [(ngModel)]="loc_restriction.city" #city="ngModel">
+                      <option disabled [ngValue]="null">Select-City</option>
+                      <option *ngFor="let cityList of cityLists" [ngValue]="cityList.city_name">{{cityList.city_name}}</option>
+                  </select>
+                  <div *ngIf="f.submitted && !city.valid" class="help-block">Please select a State</div> 
+                </div>
+              </div> 
+           </div> 
+           <div class="row">
+             <div class="col-md-12"> 
+                <button class="btn btn-primary mt-2">Submit</button>
+             </div> 
+           </div> 
+         </div> 
+       </form> 
+     <div>  
+  </div>  
+ </div>
+</div>
+</ng-template>

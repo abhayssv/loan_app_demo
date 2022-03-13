@@ -1,0 +1,59 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Profile</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Profile</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content -->
+<section class="box-typical box-typical-padding">
+  <div class="user-card-row">
+    <div class="tbl-row">
+      <div class="tbl-cell tbl-cell-photo tbl-cell-photo-64">
+        <a class="pro-image" target="_blank">
+          <img [attr.src]="profile.profileimagethumb" role="button" class="product-img-border"/>
+        </a>
+      </div>
+      <div class="tbl-cell">
+        <p class="user-card-row-name font-16">{{ profile.firstname }} {{ profile.lastname }}</p>
+        <p class="user-card-row-mail font-14">{{ profile.email }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="row m-y-3">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">First Name </label>
+        <span class="form-control maxlength-simple">{{ profile.firstname || "&nbsp;" }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="lastname">Last Name </label>
+        <span class="form-control maxlength-simple">{{ profile.lastname || "&nbsp;" }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Email </label>
+        <span class="form-control maxlength-simple">{{ profile.email || "&nbsp;" }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="mobile_no">Mobile Number </label>
+        <span class="form-control maxlength-simple">{{ profile.mobile_no || "&nbsp;" }}</span>
+      </fieldset>
+    </div>
+    <div class="col-lg-12 form-group m-y-1">
+      <a [routerLink]="['/profile/edit']" class="btn btn-primary">Edit</a>
+    </div>
+  </div>
+</section>
+<!-- /.content -->

@@ -1,0 +1,33 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Faq Details</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/faqs']">Faqs</a></li>
+          <li class="active">Faq Details</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content -->
+<section class="box-typical box-typical-padding"> 
+  <div class="row m-y-1">
+    <div class="col-lg-12">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Question </label>
+        <span class="form-control maxlength-simple">{{ faq.question }}</span>
+      </fieldset>
+    </div> 
+  </div>
+  <div class="row m-y-1">
+    <div class="col-lg-12">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="firstname">Answer </label> 
+        <textarea class="form-control" [(ngModel)]="faq.answer" disabled rows="4" cols="50"></textarea>
+      </fieldset>
+    </div> 
+  </div> 
+</section>
+<!-- /.content -->

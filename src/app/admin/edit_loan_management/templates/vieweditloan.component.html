@@ -1,0 +1,46 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>View Edit Laon</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/sub_category']">View Edit Laon</a></li>
+          <li class="active">View Edit Laon</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main content -->
+<section class="box-typical box-typical-padding"> 
+  <h5>View Edit Laon Detail</h5>
+  <div class="row m-y-1">
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">Category Name</label>
+        <span class="form-control maxlength-simple">{{ subcategory.userCategory.category }}</span>
+      </fieldset>
+    </div> 
+    <div class="col-lg-6">
+      <fieldset class="form-group">
+        <label class="semibold form-label" for="email">View Edit Laon </label>
+        <span class="form-control maxlength-simple">{{ subcategory.name }}</span>
+      </fieldset>
+    </div> 
+  </div> 
+  <div class="row">
+    <div class="col-md-6">
+        <div class="form-group" >
+          <label class="semibold form-label">Permission</label>
+          <div *ngFor="let permission of permissions">
+              <label>
+                <input type="checkbox" name="{{permission.id}}" [value]="permission.id" [checked]="permission.id" disabled (change)="onChange($event, permission.id )"/>
+                {{permission.per_name}}
+              </label>
+            </div> 
+        </div>
+    </div>  
+</div>
+  
+</section>
+<!-- /.content -->

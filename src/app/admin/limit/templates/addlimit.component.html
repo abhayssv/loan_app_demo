@@ -1,0 +1,73 @@
+<header class="section-header">
+    <div class="tbl">
+        <div class="tbl-row">
+            <div class="tbl-cell">
+                <h3>Add User Limit Calculation</h3>
+                <ol class="breadcrumb breadcrumb-simple">
+                    <li><a [routerLink]="['/']">Home</a></li>
+                    <li><a [routerLink]="['/app_user_limit']">User Limit Calculation</a></li>
+                    <li class="active">Add User Limit Calculation</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main content -->
+<section class="box-typical box-typical-padding">
+    <form name="form" (ngSubmit)="f.form.valid && save(f.value)" #f="ngForm" novalidate>
+        <div class="row m-t-1">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !user_type.valid}">
+                            <label for="user_type" class="required semibold form-label">User Type</label> 
+                            <select class="form-control" name="user_type" [(ngModel)]="limit.user_type" #user_type="ngModel" required>
+                                <option [ngValue]="null" disabled>Select User Type</option>
+                                <option *ngFor="let user_type of user_types" [ngValue]="user_type.id">{{user_type.name}}</option>
+                              </select>
+                            <div *ngIf="f.submitted && !user_type.valid" class="help-block">User Type field is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !level.valid}">
+                            <label for="level" class="required semibold form-label">Lavel</label> 
+                            <select class="form-control" name="level" [(ngModel)]="limit.level" #level="ngModel" required>
+                                <option [ngValue]="null" disabled>Select Level</option>
+                                <option *ngFor="let level of levels" [ngValue]="level.id">{{level.name}}</option>
+                            </select>
+                            <div *ngIf="f.submitted && !level.valid" class="help-block">Lavel field is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !initial_limit.valid}">
+                            <label for="initial_limit" class="required semibold form-label">Initial Limit</label>
+                            <!-- <input type="number" class="form-control" name="initial_limit" [(ngModel)]="limit.initial_limit" #initial_limit="ngModel" required> -->
+                            <select class="form-control" name="initial_limit" [(ngModel)]="limit.initial_limit" #initial_limit="ngModel" required>
+                                <option [ngValue]="null" disabled>Select Initial Limit</option>
+                                <option *ngFor="let limits of initial_limits" [ngValue]="limits.limit">{{limits.limit}}</option>
+                            </select>
+                            <div *ngIf="f.submitted && !initial_limit.valid" class="help-block">Initial Limit field is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !final_limit.valid}">
+                            <label for="final_limit" class="required semibold form-label">Final Limit</label>
+                            <!-- <input type="number" class="form-control" name="final_limit" [(ngModel)]="limit.final_limit" #final_limit="ngModel" required> -->
+                            <select class="form-control" name="final_limit" [(ngModel)]="limit.final_limit" #final_limit="ngModel" required>
+                                <option [ngValue]="null" disabled>Select Final Limit</option>
+                                <option *ngFor="let f_limits of final_limits" [ngValue]="f_limits.limit">{{f_limits.limit}}</option>
+                            </select>
+                            <div *ngIf="f.submitted && !final_limit.valid" class="help-block">Final Limit field is required</div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+            <div class="col-md-12 align-middle">
+                <div class="form-group">
+                    <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+                    <a class="btn btn-primary" [routerLink]="['/app_user_limit']">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

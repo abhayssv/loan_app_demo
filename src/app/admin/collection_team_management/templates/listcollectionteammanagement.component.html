@@ -1,0 +1,73 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Collection Team Management</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Collection Team Management</li>
+        </ol>
+        <!-- <div class="add-button pull-right">
+          <a [routerLink]="['/category/add/']" class="btn btn-inline btn-primary btn-sm" title="Add">Add Collection Team Management</a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <table id="listcollection" class="display table table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <!-- <th>Id</th> -->
+        <th>Role</th>
+        <th>Min Days</th>
+        <th>Max Days</th> 
+        <th style="text-align:center">Action</th>
+        <!-- <th>Description</th>  --> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let collection of collectionteammanagement" [attr.id]="collection.id"> 
+        <!-- <td>
+          {{ collection.role_id }}
+        </td> -->
+        <td *ngIf="collection.role_id == 7">
+          Customer Care
+        </td>
+        <td *ngIf="collection.role_id == 8">
+          S1
+        </td>
+        <td *ngIf="collection.role_id == 9">
+          S2
+        </td>
+        <td *ngIf="collection.role_id == 10">
+          S3
+        </td>
+        <td *ngIf="collection.role_id == 11">
+          M1
+        </td>
+        <td *ngIf="collection.role_id == 12">
+          M2
+        </td>
+        <td *ngIf="collection.role_id == 6">
+          Collection Manager
+        </td>  
+        <td>
+          {{ collection.min_days }}
+        </td> 
+        <td>
+          {{ collection.max_days }}
+        </td>  
+        <td class="text-center">
+          <!-- <a [routerLink]="['/collection_team_management/view/' + collection.id]" class="btn btn-inline btn-primary btn-sm" title="View Collection Team Management"><i class="fa fa-search"></i></a>  -->
+          
+          <a [routerLink]="['/collection_team_management/edit/' + collection.id]" class="btn btn-inline btn-primary btn-sm" title="Edit Collection Team Management"><i class="fa fa-pencil"></i></a>
+           
+          <!-- <span class="btn btn-inline btn-danger btn-sm" title="Delete User" (click)="delete1(cate_gory.user_type)"><i class="fa fa-trash"></i></span> -->
+            
+        </td> 
+      </tr>
+    </tbody>
+  </table>
+</section>

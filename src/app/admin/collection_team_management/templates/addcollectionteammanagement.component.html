@@ -1,0 +1,47 @@
+<header class="section-header">
+    <div class="tbl">
+        <div class="tbl-row">
+            <div class="tbl-cell">
+                <h3>Add Collection Team Management</h3>
+                <ol class="breadcrumb breadcrumb-simple">
+                    <li><a [routerLink]="['/']">Home</a></li>
+                    <li><a [routerLink]="['/collection_team_management']">Collection Team Management</a></li>
+                    <li class="active">Add Collection Team Management</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main content -->
+<section class="box-typical box-typical-padding">
+    <form name="form" (ngSubmit)="f.form.valid && save(f.value)" #f="ngForm" novalidate>
+        <div class="row m-t-1">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !category.valid}">
+                            <label for="category" class="required semibold form-label">Collection Team Management Name</label>
+                            <input type="text" class="form-control" name="category" [(ngModel)]="category.category" #category="ngModel" required>
+                            <div *ngIf="f.submitted && !category.valid" class="help-block">Collection Team Management name field is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid}">
+                            <label for="description" class="required semibold form-label">description</label>
+                            <input type="text" class="form-control" name="description" [(ngModel)]="category.description" #description="ngModel" required>
+                            <div *ngIf="f.submitted && !description.valid" class="help-block">description field is required</div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+            <div class="col-md-12 align-middle">
+                <div class="form-group">
+                    <button class="btn btn-primary" style="margin-right: 10px;">Save</button>
+                    <a class="btn btn-primary" [routerLink]="['/category']">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Vizzve</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"rel="stylesheet"> -->
+<link rel="stylesheet" href="styles.25d15adc75e34835b760.css"></head>
+
+<body class="with-side-menu">
+    <app-root></app-root>
+<script src="runtime-es2015.2acd742c7bea62dcd244.js" type="module"></script><script src="polyfills-es2015.15e832ac44e7bdc98225.js" type="module"></script><script src="runtime-es5.525ca834f9c40b45c48f.js" nomodule defer></script><script src="polyfills-es5.a9b016f8f4adbfba0ca2.js" nomodule defer></script><script src="scripts.ccaf5a619b6cbe7f3455.js" defer></script><script src="main-es2015.ae32aa2c8e3892e96d21.js" type="module"></script><script src="main-es5.5d929f9f8dc753525e9d.js" nomodule defer></script></body>
+
+</html>

@@ -1,0 +1,211 @@
+.has-error .checkbox,
+.has-error .checkbox-inline,
+.has-error .control-label,
+.has-error .help-block,
+.has-error .radio,
+.has-error .radio-inline,
+.has-error.checkbox label,
+.has-error.checkbox-inline label,
+.has-error.radio label,
+.has-error.radio-inline label {
+    color: #a94442;
+    font-size: .875rem;
+}
+
+.has-error .form-control {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)
+}
+
+.has-error .form-control:focus {
+    border-color: #843534;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483
+}
+
+.has-error .input-group-addon {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #a94442;
+}
+
+.has-error .form-control-feedback {
+    color: #a94442
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    /* Light grey */
+    border-top: 16px solid #afcb1f;
+    /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    position: fixed;
+    left: 45%;
+    top: 35%;
+}
+
+.loader_container {
+    background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
+    font-family: Helvetica;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100vw;
+    z-index: 10;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+admin-footer {
+    background: #ffffff none repeat scroll 0 0;
+    bottom: 0;
+    padding: 8px 15px;
+    position: fixed;
+    width: 100%;
+    z-index: 5;
+}
+
+.clear-image {
+    margin-top: 1.2rem !important;
+}
+
+.clear-image i {
+    font-size: 1.5rem !important;
+}
+
+.remove-profile-picture {
+    font-size: 1rem !important;
+    position: absolute !important;
+    margin-top: -70px;
+    margin-left: 50px;
+    color: #a94442;
+}
+
+.change-password-link {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+    cursor: pointer;
+    color: RED !important;
+}
+
+.form-group span.form-control {
+    cursor: not-allowed;
+}
+
+.m-r-xs {
+    margin-right: 8px !important
+}
+
+hr {
+    position: relative;
+    border: 0;
+    clear: both;
+    display: block;
+    width: 100%;
+    background-color: #efefef;
+    margin-top: 20px!important;
+    margin-bottom: 20px !important;
+    height: 0!important;
+    border-top: 1px solid #eeeeee;
+    top: 7px;
+}
+
+.side-menu {
+    overflow: scroll!important;
+}
+
+.min-ht{
+  min-height: 600px !important;
+}
+
+.vizzve-loading {
+     position: relative;
+     opacity: 0.5;
+}
+
+.vizzve-loading:before {
+     width: 18px;
+     height: 18px;
+     box-sizing: border-box;
+     border: solid 2px transparent;
+     border-top-color: #29d;
+     border-left-color: #29d;
+     border-radius: 50%;
+     content: "";
+     -webkit-animation: vizzve-spin 0.5s linear infinite;
+     -moz-animation: vizzve-spin 0.5s linear infinite;
+     animation: vizzve-spin 0.5s linear infinite;
+     top: 0%;
+     left: 0%;
+     right: 0%;
+     bottom: 0%;
+     position: absolute;
+     z-index: 1000;
+     margin: auto;
+}
+
+@keyframes vizzve-spin {
+     from {
+         transform: rotate(0deg);
+    }
+     to {
+         transform: rotate(360deg);
+    }
+}
+
+.is-disabled {
+  pointer-events: none;
+  opacity: .5;
+}
+
+.blink {
+  -webkit-animation: running_pulse 1.5s infinite;
+  animation: running_pulse 1.5s infinite;
+}
+
+@keyframes running_pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.bg-light{
+ background: var(--light);
+}
+
+.pointer {
+  cursor: pointer;
+}
+ 

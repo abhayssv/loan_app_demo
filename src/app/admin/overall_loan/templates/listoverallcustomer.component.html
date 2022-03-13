@@ -1,0 +1,168 @@
+<header class="section-header">
+  <div class="tbl">
+    <div class="tbl-row">
+      <div class="tbl-cell">
+        <h3>Overall Customer Applied</h3>
+        <ol class="breadcrumb breadcrumb-simple">
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li class="active">Overall Customer Applied</li>
+        </ol> 
+      </div>
+      <div class="tbl-cell ref-btn">
+        <button class="btn btn-primary" (click)="refresh()"><i class="fa fa-repeat"></i> Refresh</button> 
+      </div>
+    </div>
+  </div>
+</header>
+<section class="box-typical box-typical-padding">
+  <h5>Search & Filter</h5>
+  <form name="form" (ngSubmit)="search(f.value)" #f="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="from_date">From Date</label>
+        <input type="date" class="form-control" name="from_date" [(ngModel)]="searchoverallcustomer.from_date" #from_date="ngModel">
+      </div>  
+      <div class="col-md-3">
+        <label for="to_date">To Date</label>
+        <input type="date" class="form-control" name="to_date" [(ngModel)]="searchoverallcustomer.to_date" #to_date="ngModel">
+      </div>  
+      <div class="col-md-3">
+        <label for="loan_id">Loan Id</label>
+        <input mdInput type="number" class="form-control" name="loan_id" [(ngModel)]="searchoverallcustomer.loan_id" #loan_id="ngModel">
+      </div>  
+      <div class="col-md-3">
+        <label for="name">Customer Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="searchoverallcustomer.name" #name="ngModel">
+      </div>   
+    </div><br>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="mobile_no">Mobile Number</label>
+        <input mdInput type="number" class="form-control" name="mobile_no" [(ngModel)]="searchoverallcustomer.mobile_no" #mobile_no="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="email">Email</label>
+        <input mdInput type="text" class="form-control" name="email" [(ngModel)]="searchoverallcustomer.email" #email="ngModel">
+      </div>
+      <div class="col-md-3">
+        <label for="id_number">Adhaar Number</label>
+        <input type="number" class="form-control" name="id_number" [(ngModel)]="searchoverallcustomer.id_number" #id_number="ngModel">
+      </div> 
+      <div class="col-md-3">
+        <label for="user_type">User Type</label> 
+        <select class="form-control" name="user_type" [(ngModel)]="searchoverallcustomer.user_type" #user_type="ngModel" required>
+          <option [ngValue]="null" disabled>select-user-type</option>
+          <option *ngFor="let userType of user_types" [ngValue]="userType.id">{{userType.name}}</option>
+        </select>
+      </div>  
+    </div><br>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="tenure">Tenure</label> 
+        <input type="text" class="form-control" name="tenure" [(ngModel)]="searchoverallcustomer.tenure" #tenure="ngModel">
+      </div>   
+      <div class="col-md-3">
+        <label for="amount">Amount</label>
+        <select class="form-control" name="amount" [(ngModel)]="searchoverallcustomer.amount" #amount="ngModel" required>
+          <option [ngValue]="null" disabled>select-tenure</option>
+          <option *ngFor="let amount of amounts" [ngValue]="amount.amount">{{amount.amount}}</option>
+        </select>
+      </div> 
+      <div class="col-md-3">
+        <label for="status">Status</label> 
+        <select class="form-control" name="status" [(ngModel)]="searchoverallcustomer.status" #status="ngModel" required>
+          <option disabled>select-status</option>
+          <option *ngFor="let loan_status of loanStatus" [value]="loan_status.status_id">{{ loan_status.status }}</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="reviewer">Reviewer</label>
+        <select class="form-control" name="reviewer" [(ngModel)]="searchoverallcustomer.reviewer" #reviewer="ngModel" required>
+          <option [ngValue]="null" disabled>select-user-type</option>
+          <option *ngFor="let reviewer of reviewers" [ngValue]="reviewer.id">{{reviewer.name}} ({{reviewer.count}})</option>
+        </select>
+      </div>   
+    </div><br>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="assigner">Assigned</label>
+        <select class="form-control" name="assigner" [(ngModel)]="searchoverallcustomer.assigner" #assigner="ngModel" required>
+          <option [ngValue]="null" disabled>select-user-type</option>
+          <option *ngFor="let assinger of assignerLists" [ngValue]="assinger.id">{{assinger.name}} ({{assinger.count}})</option>
+        </select>
+      </div>
+    </div>
+    <div class="row m-t-1">
+      <div class="col-md-2 search-button">
+        <button class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+      </div> 
+      <div class="col-md-2 search-button">
+        <span (click)="reset()" class="btn btn-warning" title="Reset Filter">Reset Filter</span>
+      </div>
+    </div>
+  </form>
+</section>
+<!-- Main Content -->
+<section class="box-typical box-typical-padding">
+  <div class="table-responsive">
+    <table class="display table table-bordered" cellspacing="0" width="100%">
+      <thead>
+        <tr> 
+          <th>Loan Id</th>
+          <th>Name</th>
+          <th>Mobile No</th>
+          <th>Email</th> 
+          <th>Loan Type</th>
+          <th>Loan Amount</th> 
+          <th>Apply Date</th>
+          <th>Review</th> 
+          <th>Status</th>  
+        </tr>
+      </thead>
+      <tbody [style.height]="isLoading? '600px':''" [class]="isLoading ? 'vizzve-loading': ''" >
+        <ng-container *ngFor="let overallcustomer of overallcustomers | paginate: { itemsPerPage: limit, currentPage: p, totalItems: total }">
+          <tr>
+            <td>
+              <a [routerLink]="['/overall_customer_loan/view/' + overallcustomer.loan_id + '/' + overallcustomer.appUser.user_id]" target="_blank" title="View Customer Detail">{{ overallcustomer.loan_id }}</a>
+            </td>
+            <td>
+              {{ overallcustomer.appUser.username }}
+            </td>
+            <td>
+              {{ overallcustomer.appUser.mobile_no }}
+            </td>
+            <td>
+              {{ overallcustomer.appUser.email }}
+            </td>
+            <td *ngIf="overallcustomer.appUser.user_type == 0">
+              Student
+            </td>
+            <td *ngIf="overallcustomer.appUser.user_type == 1">
+              Employment
+            </td>
+            <td *ngIf="overallcustomer.appUser.user_type == 2">
+              Business
+            </td>
+            <td>
+              {{ overallcustomer.required_amount }}
+            </td>
+            <td>
+              {{ overallcustomer.apply_date | date: 'dd-MM-yyyy' }}
+            </td> 
+            <td *ngIf="overallcustomer.status === 0 || overallcustomer.status === 1 || overallcustomer.status === 2">First Review </td>
+            <td *ngIf="overallcustomer.status === 3 || overallcustomer.status === 4 || overallcustomer.status === 5 || overallcustomer.status === 6 || overallcustomer.status === 7 || overallcustomer.status === 8">Second Review</td>
+            <td>
+              {{overallcustomer.loanStatus.status}}
+            </td> 
+          </tr>
+        </ng-container>
+        <tr *ngIf="length == 0">
+          <td colspan="9" class="text-center">No records.</td>
+        </tr>
+      </tbody> 
+    </table>
+    <div class="pagination pagination-sm m-0 float-right">
+      <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+    </div>
+  </div>
+</section>
